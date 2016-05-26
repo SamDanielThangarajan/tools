@@ -1,4 +1,4 @@
-export REPO_BASE="/repo" #Give a repository name
+[[ -z "$REPO_BASE" ]] && echo "Need to set variable REPO_BASE " && exit 1
 
 BASEPATH=$(dirname -- "${BASH_SOURCE[0]}")
 SCRIPTPATH=$(cd -P "$BASEPATH" && pwd -P)
