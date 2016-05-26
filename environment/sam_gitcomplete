@@ -1,0 +1,1 @@
+complete git 'p/1/(status log push rebase checkout fetch commit merge reset revert mergetool difftool show clean add branch tag cherry-pick push-for-review submodule blame tree tree-all push-as-draft)/'

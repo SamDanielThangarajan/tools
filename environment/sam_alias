@@ -1,0 +1,36 @@
+
+#Set Git clones
+alias lm="source ~/tools/setclone.sh --project lm --clone"
+alias sec="source ~/tools/setclone.sh --project sec --clone"
+alias hack="source ~/tools/setclone.sh --project hackathon --clone"
+alias com="source ~/tools/setclone.sh --project com --clone"
+alias gt="source ~/tools/setclone.sh --project gerrit-tools --clone"
+
+#Indexing the projects
+alias index-lm="python ~/tools/generatetags.py --project lm --clone"
+alias index-com="python ~/tools/generatetags.py --project com --clone"
+alias index-sec="python ~/tools/generatetags.py --project sec --clone"
+alias index="python ~/tools/generatetags.py"
+
+#Project specific Checkout utilities
+#alias checkout-<projname>="~/tools/gerrit-tools/gerrit_checkout.sh <gerrit_server>:<port> <project> "
+
+#Gerrit-tools
+alias gerrit-query="~/tools/gerrit-tools//gerrit-query.py"
+#alias gq-<proj>-open="gerrit-query -P <port> -S <server> -p <proj> -s open"
+#alias gq-<proj>-closed="gerrit-query -P <port> -S <server> -p <proj> -s closed"
+
+#Utilities
+alias ff="python ~/tools/findFileinclone.py --file"
+alias vg='valgrind --leak-check=full --show-reachable=yes --track-origins=yes'
+alias vimrc='vi ~/.vimrc'
+alias renamer='source ~/tools/renamer.sh'
+alias checkout='~/tools/gerrit_checkout.sh'
+alias delb="git branch -D "
+
+#Alias for Node related helpers
+#alias sn='~/tools/node_helper.sh -l | less'
+source ~/tools/node_helper.sh -s
+alias shell="ps -p $$ | grep -v CMD | cut -d ' ' -f 8"
+
+echo "Alias sourced"
