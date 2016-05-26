@@ -28,9 +28,12 @@ set ic
 let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 let Tlist_Inc_Winwidth = 0
 
-map z :w
-map f :f
-map F :x
+map z :w
+
+map f :f
+
+map F :x
+
 map W :!asrch <cword> <CR>
 map [1~ 0
 map [2~ R
@@ -48,9 +51,15 @@ map [C l
 map [D h
 abbr U2 U_INT16
 abbr U4 U_INT32
-abbr FO for ( ; ; ){} 
-abbr WH while (){} 
-abbr DO do{} while ();
+abbr FO for ( ; ; )
+{
+} 
+abbr WH while ()
+{
+} 
+abbr DO do
+{
+} while ();
 abbr CO /*  */
 abbr CB /*
 abbr CE */
@@ -58,6 +67,13 @@ abbr teh the
 abbr esle else
 abbr NO_POR_NUM NO_PORT_NUM
 
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when its xterm-keys option is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
 
  "for cscope connections 
 	if has("cscope")
