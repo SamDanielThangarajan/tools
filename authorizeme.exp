@@ -1,0 +1,63 @@
+#!/usr/bin/expect
+
+log_user 0
+
+set user [lindex $argv 0]
+set node [lindex $argv 1]
+set key [lindex $argv 2]
+
+spawn sh -c "/usr/bin/ssh edansam@127.0.0.1 'mkdir -p ~/.ssh && echo ${key} >> ~/.ssh/authorized_keys'"
+expect {
+    "Password:" {
+        puts "Enter the password:"
+        flush stdout
+        gets stdin password
+        send "$password\n"
+        expect {
+            "Continue." {
+                send "\n"
+            }
+                
+        }
+
+
+    }
+    "yes/no)?" {
+        send "yes\n"
+            set timeout -1
+            expect {
+                "Password:" {
+                    puts "Enter the password:"
+                    flush stdout
+                    gets stdin password
+                    send "$password\n"
+                    expect {
+                        "Continue." {
+                            send "\n"
+                         }
+                
+                    }
+                }
+                timeout {
+                    exit 1
+                }
+                eof {
+                    exit 1
+                }
+            }
+    }
+    timeout {
+        exit 1
+    }
+    eof {
+        exit 1
+    }
+}
+expect {
+    "# " {
+    }
+    timeout {
+        exit 1
+    }
+}
+
