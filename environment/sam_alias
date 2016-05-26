@@ -33,4 +33,6 @@ alias delb="git branch -D "
 source ~/tools/node_helper.sh -s
 alias shell="ps -p $$ | grep -v CMD | cut -d ' ' -f 8"
 
+alias start-tmux='source ~/tools/tmux-login'
+
 echo "Alias sourced"

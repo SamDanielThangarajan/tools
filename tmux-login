@@ -1,0 +1,65 @@
+#!/bin/bash
+#Check if we have ongoing tmux sessions
+
+declare -a SESSIONS
+declare SESSION_NAME
+
+function populate_sessions()
+{
+    i=0
+    rm -rf .tmux_sessons_op
+    tmux list-sessions >& .tmux_sessons_op
+    [[ $? -ne 0 ]] && return 0 
+    for s_name in `cat .tmux_sessons_op | awk -F ':' '{print $1}'`
+    do
+        SESSIONS[$i]=$s_name
+        let "i = $i + 1"
+    done
+    rm -rf .tmux_sessons_op
+}
+
+function list_sessions()
+{
+    i=1
+    for s_name in ${SESSIONS[@]}
+    do
+        echo $i"." $s_name
+        let "i = $i + 1"
+    done
+}
+
+function check_existance()
+{
+    for s_name in ${SESSIONS[@]}
+    do
+        [[ $s_name = $SESSION_NAME ]] && return 0
+    done
+    return 1
+}
+
+function attach_session()
+{
+    echo "Attaching session : $SESSION_NAME"
+    tmux attach -t $SESSION_NAME
+}
+
+function create_new_session()
+{
+    echo "New session : $SESSION_NAME"
+    tmux new -s $SESSION_NAME
+}
+
+echo "calling populate"
+populate_sessions
+
+if [[ ${#SESSIONS[@]} -gt 0 ]]; then
+    echo "Existing Sessions : "
+    list_sessions
+    echo -n "Enter session name to create/attach : "
+    read SESSION_NAME
+    [[ check_existance ]] && attach_session || create_new_session
+else
+    echo -n "Enter new tmux session name : "
+    read SESSION_NAME
+    create_new_session
+fi
