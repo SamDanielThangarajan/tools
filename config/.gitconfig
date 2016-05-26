@@ -1,0 +1,37 @@
+[user]
+  name = <Name>
+  email = <Email>
+
+[alias]
+  tree = log --date=short --graph --abbrev-commit --decorate --format=format:'%C(red)%h %C(dim white)(%cd) - %C(cyan)%s - %C(dim white)%cn%C(reset)' -n 100
+  tree-all = log --date=short --graph --abbrev-commit --decorate --format=format:'%C(red)%h %C(dim white)(%cd) - %C(cyan)%s - %C(dim white)%cn%C(reset)' --all
+  update = !git fetch && git rebase
+  co = !git checkout
+  st = !git status --u=no
+  lm-update = !git remote update && git checkout develop && git pull --ff-only origin develop
+  lm-maint-update = !git remote update && git checkout lm5.0_maint/develop && git pull --ff-only origin lm5.0_maint/develop
+
+[merge]
+  tool = kdiff3
+
+[color]
+  ui = true
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  pager = true
+
+[color "status"]
+  added = green bold
+  changed = red bold
+  untracked = yellow
+
+[color "diff"]
+  old = red bold
+  new = white
+  whitespace = reverse green
+  func = magenta
+  plain = green
+  meta = yellow
+
