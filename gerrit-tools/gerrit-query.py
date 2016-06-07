@@ -26,13 +26,14 @@ def list_open_changes():
             #print json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
 
             try:
-                print 'Title         : ' + data['subject']
-                print 'Change-id     : ' + data['id']
-                print 'Owner         : ' + data['owner']['name']
-                print 'Status        : ' + data['status']
-                print 'url           : ' + data['url']
-                print 'Current patch : ' + data['currentPatchSet']['ref']
-                print ''
+                if options_m.author is None or options_m.author == data['owner']['name']:
+                    print 'Title         : ' + data['subject']
+                    print 'Change-id     : ' + data['id']
+                    print 'Owner         : ' + data['owner']['name']
+                    print 'Status        : ' + data['status']
+                    print 'url           : ' + data['url']
+                    print 'Current patch : ' + data['currentPatchSet']['ref']
+                    print ''
 
             except:
                 pass
@@ -53,6 +54,8 @@ def processOptions(args):
             metavar="SERVER", help="the gerrit server")
     parser.add_option("-s", "--status", action="store", type="string", dest="status",\
             metavar="STATUS", help="open|closed|merged")
+    parser.add_option("-a", "--author", action="store", type="string", dest="author",\
+            metavar="AUTHOR", help="Author Name")
     (options_m, args) = parser.parse_args(args)
     """ TODO : check the options """
 
