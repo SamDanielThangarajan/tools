@@ -6,7 +6,6 @@ SCRIPTPATH=$(cd -P "$BASEPATH" && pwd -P)
 
 if [ -f ~/tools/environment/sam_gitcomplete ]; then
     source ~/tools/environment/sam_gitcomplete
-    echo "Setting up git complete setup ...done"
 fi
 
 
@@ -16,7 +15,11 @@ export NODES_CONFIG=~/tools/environment/nodes.cfg
 
 source ~/tools/environment/sam_alias
 
-echo ""
+# Some VI exports to marry VIM with TMUX
+# Two giant robots colide :)
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 echo ""
 
 if [ -f ~/reminders ]; then

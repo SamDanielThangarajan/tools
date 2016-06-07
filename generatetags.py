@@ -37,7 +37,7 @@ def cmd(cmd):
 def verifyClone():
   global clone_pathM
   #clone_pathM = '/project/EAB3_EMC/LM/' + getpass.getuser() + '/' + optionsM.clone_name
-  clone_pathM = '/repo/' + optionsM.project_name  + '/' + optionsM.clone_name
+  clone_pathM = os.environ['REPO_BASE'] + '/' + optionsM.project_name  + '/' + optionsM.clone_name
   if not os.path.exists(clone_pathM):
     error('clone does not exist')
 
@@ -67,7 +67,7 @@ def generateTags():
   print getHostName(), ": generating ctags for clone " ,  optionsM.clone_name  
   exclude_list='--exclude=boost* --exclude=gmock* --exclude=poco* --exclude=thrift-* --exclude=maf*'
   #TODO : removed --language-force=C++ from below command
-  ctags_cmd = '/usr/bin/ctags -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q ' + exclude_list +' -f ' + tag_fileM + ' ' + clone_pathM
+  ctags_cmd = 'ctags -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q ' + exclude_list +' -f ' + tag_fileM + ' ' + clone_pathM
   cmd(ctags_cmd)
   print getHostName(), ": generating ctags for clone " ,  optionsM.clone_name + ' ...done' 
 
@@ -81,7 +81,7 @@ def generateCscopeDb():
             f.write(file1.rstrip())
             f.write('\n')
     f.close()        
-    cscope_cmd = '/usr/bin/cscope -b -f ' + cscope_dbM + ' -i filelist'  
+    cscope_cmd = 'cscope -b -f ' + cscope_dbM + ' -i filelist'  
     cmd(cscope_cmd)
     os.remove('filelist')
     print getHostName(), ": generating cscope db for clone " ,  optionsM.clone_name + ' ...done' 
