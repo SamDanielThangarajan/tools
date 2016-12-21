@@ -53,7 +53,7 @@ def processOptions(args):
     parser.add_option("-S", "--server", action="store", type="string", dest="server",\
             metavar="SERVER", help="the gerrit server")
     parser.add_option("-s", "--status", action="store", type="string", dest="status",\
-            metavar="STATUS", help="open|closed|merged")
+            metavar="STATUS", help="draft|open|closed|merged")
     parser.add_option("-a", "--author", action="store", type="string", dest="author",\
             metavar="AUTHOR", help="Author Name")
     (options_m, args) = parser.parse_args(args)

@@ -11,7 +11,7 @@ BRANCH=$4
 
 git fetch ssh://${USER}@${SERVER_AND_PORT}/${PROJECT} ${REF} && git checkout FETCH_HEAD
 git checkout -b ${BRANCH}
-git branch --set-upstream-to  origin/master
+#git branch --set-upstream-to  origin/master
 
 echo ""
 echo ""

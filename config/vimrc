@@ -1,14 +1,35 @@
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	1999 Sep 09
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"             for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
 version 4.3
-set nocompatible	" Use Vim defaults (much better!)
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"" vundle config
+"""
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+ 
+" List of plugins to be managed by vundle
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-pathogen'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'vim-scripts/OmniCppComplete'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'kien/ctrlp.vim'
+Plugin 'flazz/vim-colorschemes'
+
+" TODO plugins to consider
+" commad t
+" Look in github page for vundle for more plugins
+call vundle#end()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"" vim basic config
+"""
+
 set bs=2		" allow backspacing over everything in insert mode
 set ai			" always set autoindenting on
 set backup		" keep a backup file
@@ -69,15 +90,15 @@ if &term =~ '^screen'
 endif
 
 
- "for cscope connections 
-	if has("cscope")
-		set csprg=cscope
-		set csto=1
-		set cst
-		set nocsverb
-		cs add cscope.out
-		set csverb
-	endif
+"for cscope connections 
+if has("cscope")
+   set csprg=cscope
+   set csto=1
+   set cst
+   set nocsverb
+   cs add cscope.out
+   set csverb
+endif
 
 "C Intending Options
 "TODO: Sam changed this options
@@ -180,7 +201,9 @@ au VimLeave * echo "                  Thanks for using VIM   - Sam Daniel Thanga
 """"" Sam Daniel Custom profile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-execute pathogen#infect()
+if isdirectory("~/.vim/bundle/vim-pathogen")
+   execute pathogen#infect()
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Set numbering
@@ -253,7 +276,6 @@ autocmd InsertLeave * highlight  CursorLine ctermbg=NONE ctermfg=NONE term=bold 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "ENABLE PYTHON HIGHLIGHTING                                                                                                                                          
 syntax on
-"filetype indent plugin on
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -316,7 +338,7 @@ let OmniCpp_MayCompleteDot = 1 " autocomplete after .
 let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
 let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD", "ComAccessManagement"]
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview

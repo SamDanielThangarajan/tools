@@ -8,6 +8,10 @@ alias hack="source ${TOOLS}/setclone.sh --project hackathon --clone"
 alias com="source ${TOOLS}/setclone.sh --project com --clone"
 alias tools="source ${TOOLS}/setclone.sh --project tools --clone"
 alias gm="source ${TOOLS}/setclone.sh --project successful-git-model --clone"
+alias teasers="source ${TOOLS}/setclone.sh --project teasers --clone"
+alias team="source ${TOOLS}/setclone.sh --project TeamGenerator --clone"
+alias chat="source ${TOOLS}/setclone.sh --project chat --clone"
+alias bash-event="source ${TOOLS}/setclone.sh --project bash-event --clone"
 
 #Indexing the projects
 alias index-lm="python ${TOOLS}/generatetags.py --project lm --clone"
@@ -22,6 +26,7 @@ alias index="python ${TOOLS}/generatetags.py"
 alias gerrit-query="${TOOLS}/gerrit-tools//gerrit-query.py"
 #alias gq-<proj>-open="gerrit-query -P <port> -S <server> -p <proj> -s open"
 #alias gq-<proj>-closed="gerrit-query -P <port> -S <server> -p <proj> -s closed"
+#alias gq-<proj>-draft="gerrit-query -P <port> -S <server> -p <proj> -s draft"
 
 #Utilities
 alias ff="python ${TOOLS}/findFileinclone.py --file"
