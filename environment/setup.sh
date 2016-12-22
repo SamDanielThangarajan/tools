@@ -220,7 +220,7 @@ write_master_setup_file
 debug ""
 
 echo "Setting up vim configuration, please wait"
-#${g_script_path}/vim_setup.sh -n
+${g_script_path}/vim_setup.sh -n
 debug ""
 
 deploy_git_config

@@ -111,6 +111,8 @@ EOI
 
 #6. Install Plugins
 vim +PluginInstall +qall
+mkdir ~/.vim/plugin
+cp ${g_tools_path}/config/cscope_maps.vim ~/.vim/plugin
 
 #7. Import all the helptags
 for plugin in ${g_vim_bundle_dir}/*/; do
