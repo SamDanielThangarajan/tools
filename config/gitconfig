@@ -1,6 +1,6 @@
 [user]
-  name = <Name>
-  email = <Email>
+  @name
+  @email
 
 [alias]
   tree = log --date=short --graph --abbrev-commit --decorate --format=format:'%C(red)%h %C(dim white)(%cd) - %C(cyan)%s - %C(dim white)%cn%C(reset)' -n 100
@@ -8,8 +8,6 @@
   update = !git fetch && git rebase
   co = !git checkout
   st = !git status --u=no
-  lm-update = !git remote update && git checkout develop && git pull --ff-only origin develop
-  lm-maint-update = !git remote update && git checkout lm5.0_maint/develop && git pull --ff-only origin lm5.0_maint/develop
 
 [merge]
   tool = kdiff3

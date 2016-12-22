@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 g_time=$(date +%T)
+g_script_name=$0
 g_cur_dir=$(dirname -- "${BASH_SOURCE[0]}")
 g_script_path=$(cd -P "$g_cur_dir" && pwd -P)
 g_tools_path=$(cd -P "$g_script_path"/.. && pwd -P)
 g_master_setup_file=/home/${USER}/setup_tools.sh
 g_nodes_config=/home/${USER}/nodes.cfg
 g_debug=0
-
 
 # Function to check exit status
 # $1 exit status
@@ -21,8 +21,17 @@ function act_on_exit_status {
     fi
 }
 
+#Arg exit status
+function print_usage_and_exit {
+   echo "Usage : ${g_script_name} -r <repo-base> -n <name> -e <email> [-dh]"
+   echo "      repo-base : parent directory for all projects"
+   echo "      name : name to be used in git config"
+   echo "      email : email to be used in git config"
+   exit $1
+}
+
 function process_options {
-    OPTS=`getopt -o r:d --long repo-base:,debug -n 'setup.sh' -- "$@"`
+    OPTS=`getopt -o r:n:e:dh --long repo-base:,debug,name:,email:,help -n 'setup.sh' -- "$@"`
     act_on_exit_status $? "getopt"
     eval set -- "$OPTS"
 
@@ -30,15 +39,18 @@ function process_options {
         case "$1" in
         -r|--repo-base ) g_repo_base=$2; shift 2;;
         -d|--debug ) g_debug=1; shift ;;
+        -n|--name ) g_name=$2; shift 2;;
+        -e|--email ) g_email=$2; shift 2;;
+        -h|--help ) print_usage_and_exit 0;;
         -- ) shift; break;;
         * ) break ;;
         esac
     done
 
     debug "Repo base : ${g_repo_base}"
-    if [[ -z ${g_repo_base} ]];
+    if [[ -z ${g_repo_base} ]] || [[ -z ${g_name} ]] || [[ -z ${g_email} ]];
     then
-        act_on_exit_status 1 "Missing --repo-base option"
+       print_usage_and_exit 1
     fi
 
     return 0
@@ -125,7 +137,10 @@ debug "Writing master setup file ...done"
 
 function deploy_git_config
 {
-   cp ${g_tools_path}/config/gitconfig /home/${USER}/.gitconfig
+   local gitconfig=/home/${USER}/.gitconfig
+   cp ${g_tools_path}/config/gitconfig ${gitconfig}
+   sed -i "s/@name/name = ${g_name}/g" ${gitconfig}
+   sed -i "s/@email/email = ${g_email}/g" ${gitconfig}
    debug "git config setup ...done"
 
    git --version >& /dev/null
@@ -167,14 +182,14 @@ function setup_custom_alias
    setup_custom_alias_helper "# Setup git clones"
    for file in $(ls ${g_repo_base})
    do
-      setup_custom_alias_helper "alias ${file}=\"source \${TOOLS}/setclone.sh --project ${file} --clone"
+      setup_custom_alias_helper "alias ${file}=\"source \${TOOLS}/setclone.sh --project ${file} --clone\""
    done
    setup_custom_alias_helper ""
 
    setup_custom_alias_helper "# Index projects"
    for file in $(ls ${g_repo_base})
    do
-      setup_custom_alias_helper "alias index-${file}=\"python \${TOOLS}/generatetags.py --project ${file} --clone"
+      setup_custom_alias_helper "alias index-${file}=\"python \${TOOLS}/generatetags.py --project ${file} --clone\""
    done
    setup_custom_alias_helper ""
 
@@ -205,7 +220,7 @@ write_master_setup_file
 debug ""
 
 echo "Setting up vim configuration, please wait"
-${g_script_path}/vim_setup.sh -n
+#${g_script_path}/vim_setup.sh -n
 debug ""
 
 deploy_git_config

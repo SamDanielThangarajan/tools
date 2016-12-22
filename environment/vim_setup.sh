@@ -5,6 +5,8 @@
 
 g_project_vim_config="/home/${USER}/project_vim_config"
 g_script_dir=$(dirname $0)
+g_script_path=$(cd -P "$g_script_dir" && pwd -P)
+g_tools_path=$(cd -P "$g_script_path"/.. && pwd -P)
 g_current_dir=$(pwd)
 g_vim_dir="/home/${USER}/.vim/"
 g_vim_bundle_dir="/home/${USER}/.vim/bundle/"
@@ -87,7 +89,7 @@ mkdir ~/.vim
 #2. Create project specific vim locations
 [[ -d ${g_project_vim_config} ]] || mkdir ${g_project_vim_config}
 
-#3 . Install vundle
+#3. Install vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 act_on_exit_status $? "Install Vundle"
 
@@ -97,8 +99,15 @@ if [[ ${g_nobackup} -eq 0 ]];then
 fi
 
 #5. Deploy vimrc
-cp ${g_script_dir}/../config/vimrc ~/.vimrc
-act_on_exit_status $? "Deploy vimrc"
+#cp ${g_script_dir}/../config/vimrc ~/.vimrc
+#act_on_exit_status $? "Deploy vimrc"
+rm -rf ~/.vimrc
+cat <<EOI > ~/.vimrc
+let tools_path = '${g_tools_path}/config/vimrc'
+if filereadable(tools_path)
+   exe 'source' tools_path
+endif
+EOI
 
 #6. Install Plugins
 vim +PluginInstall +qall

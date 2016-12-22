@@ -1,0 +1,27 @@
+alias sc="source ${TOOLS}/setclone.sh "
+alias index="python ${TOOLS}/generatetags.py"
+
+#Project specific Checkout utilities
+#alias checkout-<projname>="${TOOLS}/gerrit-tools/gerrit_checkout.sh <gerrit_server>:<port> <project> "
+
+#Gerrit-tools
+alias gerrit-query="${TOOLS}/gerrit-tools//gerrit-query.py"
+#alias gq-<proj>-open="gerrit-query -P <port> -S <server> -p <proj> -s open"
+#alias gq-<proj>-closed="gerrit-query -P <port> -S <server> -p <proj> -s closed"
+#alias gq-<proj>-draft="gerrit-query -P <port> -S <server> -p <proj> -s draft"
+
+#Utilities
+alias ff="python ${TOOLS}/findFileinclone.py --file"
+alias vg='valgrind --leak-check=full --show-reachable=yes --track-origins=yes'
+alias vimrc='vi ~/.vimrc'
+alias renamer='source ${TOOLS}/renamer.sh'
+alias checkout='${TOOLS}/gerrit_checkout.sh'
+alias delb="git branch -D "
+
+#Alias for Node related helpers
+source ${TOOLS}/node_helper.sh -s
+alias shell="ps -p $$ | grep -v CMD | cut -d ' ' -f 8"
+alias :q!="exit"
+alias vi='vim'
+
+alias tmuxl='source ${TOOLS}/tmux-login'
