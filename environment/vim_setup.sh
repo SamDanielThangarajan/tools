@@ -1,17 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #script to install all vim plugins and setup vim config file
 #Next step is to remove all these things and make use of vundle
 
 g_project_vim_config="/home/${USER}/project_vim_config"
 g_script_dir=$(dirname $0)
-g_current_dir=`pwd`
+g_current_dir=$(pwd)
 g_vim_dir="/home/${USER}/.vim/"
 g_vim_bundle_dir="/home/${USER}/.vim/bundle/"
-g_ctrlp_clone="https://github.com/kien/ctrlp.vim.git"
 g_redirect=/dev/null
-
-
+g_nobackup=0
 
 
 # Function to check exit status
@@ -27,18 +25,18 @@ function act_on_exit_status {
 }
 
 function process_options {
-    OPTS=`getopt -o  --long verbose -n 'vim_setup.sh' -- "$@"`
+    OPTS=`getopt -o vn --long verbose,no-backup -n 'vim_setup.sh' -- "$@"`
     act_on_exit_status $? "getopt"
     eval set -- "$OPTS"
 
     while true ; do
         case "$1" in
-        -v|--verbose ) g_redirect=1; shift ;;  #Why /dev/stdout does not work here?
+        -v|--verbose ) g_redirect=1; shift ;;
+        -n|--no-backup ) g_nobackup=1; shift ;;
         -- ) shift; break;;
         * ) break ;;
         esac
     done
-    echo "processed options"
 }
 
 
@@ -77,10 +75,13 @@ function install_pathogen {
    curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim >& ${g_redirect}
 }
 
-#process_options $@
+process_options $@
 
 #1. Take Backup of .vim directory
-[[ -d ~/.vim ]] && cp -r ~/.vim ~/vim.backup && rm -rf ~/.vim
+if [[ ${g_nobackup} -eq 0 ]];then
+   [[ -d ~/.vim ]] && cp -r ~/.vim ~/vim.backup
+fi
+rm -rf ~/.vim
 mkdir ~/.vim
 
 #2. Create project specific vim locations
@@ -91,7 +92,9 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 act_on_exit_status $? "Install Vundle"
 
 #4. Take Backup of .vimrc
-[[ -f ~/.vimrc ]] && cp ~/.vimrc ~/vimrc.backup
+if [[ ${g_nobackup} -eq 0 ]];then
+   [[ -f ~/.vimrc ]] && cp ~/.vimrc ~/vimrc.backup
+fi
 
 #5. Deploy vimrc
 cp ${g_script_dir}/../config/vimrc ~/.vimrc

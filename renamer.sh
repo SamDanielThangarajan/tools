@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #usage:
 #./renamer <source-extention> <dest-extention>

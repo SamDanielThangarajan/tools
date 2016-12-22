@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -d ${CLONE_ROOT} ]; then
     branch=`cat ${CLONE_ROOT}/.git/HEAD | cut -d '/' -f 3`

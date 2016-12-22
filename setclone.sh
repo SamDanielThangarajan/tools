@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 
 OPTS=`getopt -o p:c: --long project:,clone: -n 'setclone.sh' -- "$@"`
