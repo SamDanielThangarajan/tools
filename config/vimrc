@@ -3,6 +3,15 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 """""""""""""""""""""""""""""""""""""""""""""""""
+"" @author
+""   Sam Daniel Thangarajan
+"" @email
+""   samdaniel.thangarajan@gmail.com
+""""
+""""
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
 "" vundle config
 """
 " set the runtime path to include Vundle and initialize
@@ -358,6 +367,7 @@ map <C-F12> :!ctags -R --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
 "5. press 's' to sort the tag list
 "6. press 'space' to get function signature
 nnoremap <silent> <C-l> :TlistToggle<CR>
+let Tlist_Show_One_File = 1
 
 
 "WINDOW NAVIGATION

@@ -25,3 +25,5 @@ alias :q!="exit"
 alias vi='vim'
 
 alias tmuxl='source ${TOOLS}/tmux-login'
+
+alias cheat-tmux='less ${TOOLS}/cheatsheat/tmux'
