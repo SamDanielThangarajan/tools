@@ -28,6 +28,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'nvie/vim-flake8'
 
 " TODO plugins to consider
 " commad t
@@ -400,7 +401,8 @@ set softtabstop=3
 "Project specific indendation
 if !empty($PROJECT_NAME)
    let project_name = $PROJECT_NAME
-   let project_specific_config = '~/project_vim_config/' . project_name . '/vimrc'
+   let user = $USER
+   let project_specific_config = "/home/" . user . "/project_vim_config/" . project_name . "/vimrc"
    if filereadable(project_specific_config)
       exe 'source' project_specific_config
    endif

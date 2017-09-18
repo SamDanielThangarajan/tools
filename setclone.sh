@@ -18,20 +18,22 @@ while true ; do
 done
 
 clone=${REPO_BASE}/${PROJECT}/${CLONE}
+custom_setup_script=${REPO_BASE}/${PROJECT}/setup.sh
 
 if [ -d ${clone} ];
 then
 	export CLONE_ROOT=${clone}
 	cd $CLONE_ROOT	
 	export CLONE_NAME=${CLONE}
-   export PROJECT_NAME=${PROJECT}
-   PROMPT_COMMAND="source ${REPO_BASE}/tools/clone/updatebranch.sh"
-   export PS1='\[\e[0;31m\]\h\[\e[0;32m\]:\[\e[0;31m\]\t\[\e[0;32m\]:\[\e[0;31m\]$GIT_BRANCH\[\e[0;32m\]\$\[\e[0m\]'
+    export PROJECT_NAME=${PROJECT}
+    PROMPT_COMMAND="source ${REPO_BASE}/tools/clone/updatebranch.sh"
+    export PS1='\[\e[0;31m\]\h\[\e[0;32m\]:\[\e[0;31m\]\t\[\e[0;32m\]:\[\e[0;31m\]$GIT_BRANCH\[\e[0;32m\]\$\[\e[0m\]'
 	export CCACHE_DIR=/tmp/.ccache.${USER}
 	export CCACHE_TEMPDIR=/tmp/.ccache.tmp.${USER}
 	export CCACHE_LOGFILE=/tmp/.ccache.${USER}/logfile
+    [[ -f ${custom_setup_script} ]] && source ${custom_setup_script}
 	echo "Clone[${CLONE}] set for project[${PROJECT}]"
-   echo "Directory : ${clone}" 
+    echo "Directory : ${clone}" 
 else
 	echo "Clone[${CLONE}] not found under project[${PROJECT}]"
 fi

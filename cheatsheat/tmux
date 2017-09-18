@@ -1,0 +1,16 @@
+#Tmux copycat
+prefix + / - regex search (strings work too)
+
+prefix + ctrl-f - simple file search
+prefix + ctrl-g - jumping over git status files (best used after git status command)
+prefix + alt-h - jumping over SHA-1 hashes (best used after git log command)
+prefix + ctrl-u - url search (http, ftp and git urls)
+prefix + ctrl-d - number search (mnemonic d, as digit)
+prefix + alt-i - ip address search
+
+#To loop
+n,N for next and previous
+
+#copy
+Enter - if you're using Tmux vi mode
+ctrl-w or alt-w - if you're using Tmux emacs mode
