@@ -201,7 +201,8 @@ touch_needed_config_files
 debug ""
 
 # Write custom alias
-REPO_BASE=${g_repo_base} ${g_script_path}/write_tools_alias.sh
+export REPO_BASE=${g_repo_base}
+${g_script_path}/write_tools_alias.sh
 
 echo "Created following back-up files..."
 for file in ${g_backedup_list[@]};

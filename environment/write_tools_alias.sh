@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-test -n "${REPO_BASE}" || echo "REPO_BASE is not set. exiting" && exit 1
+[[ -z ${REPO_BASE} ]] && echo "REPO_BASE is not set. exiting" && exit 1
 
 g_time=$(date +%T)
 g_repo_base=${REPO_BASE}
@@ -13,6 +13,9 @@ function custom_alias_writer
 ################################
 ## Main
 ###
+
+echo "Writing custom alias on ${g_time}"
+
 rm -rf /home/${USER}/tools_alias
 
 custom_alias_writer "##########################################"
@@ -48,6 +51,6 @@ do
    author=$(grep "gerrit.author" ${project_cfg} | cut -d '=' -f 2)
    custom_alias_writer "alias gq-$file-open=\"gerrit-query -S $server -P $port --project $p_name -s open\""
    custom_alias_writer "alias gq-$file-merged=\"gerrit-query -S $server -P $port --project $p_name -s merged\""
-   custom_alias_writer "alias gq-$file-open-mine=\"gerrit-query -S $server -P $port --project $p_name -s open -a \"$author\"\""
-   custom_alias_writer "alias gq-$file-merged-mine=\"gerrit-query -S $server -P $port --project $p_name -s merged -a \"$author\"\""
+   custom_alias_writer "alias gq-$file-open-mine=\"gerrit-query -S $server -P $port --project $p_name -s open -a \\\"$author\\\"\""
+   custom_alias_writer "alias gq-$file-merged-mine=\"gerrit-query -S $server -P $port --project $p_name -s merged -a \\\"$author\\\"\""
 done
