@@ -33,3 +33,5 @@
   plain = green
   meta = yellow
 
+[core]
+  editor = vi
