@@ -2,7 +2,7 @@
 
 #Usage: ./script <operation> server:port <project> refs/changes/55/244055/2 new_branch_name
 
-if [[ $# -ne 4 ]]
+if [[ $# -lt 4 ]]
 then
    cat <<EOF
 
@@ -34,6 +34,7 @@ then
    Example:
    git branch --set-upstream-to=origin/master
 
-   > Switched to ${BRANCH}
+
+> Switched to ${BRANCH}
 EOF
 fi
