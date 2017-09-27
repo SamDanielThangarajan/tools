@@ -39,18 +39,35 @@ done
 custom_alias_writer ""
 
 custom_alias_writer "# Gerrit commands"
+custom_alias_writer "## List Available changes in gerrit"
 for file in $(ls ${g_repo_base})
 do
    project_cfg=${g_repo_base}/${file}/project.cfg
    [[ ! -f ${project_cfg} ]] && continue
 
-   echo "Writing gerrit alias for project $file"
    p_name=$(grep "gerrit.name" ${project_cfg} | cut -d '=' -f 2)
    port=$(grep "gerrit.port" ${project_cfg} | cut -d '=' -f 2)
    server=$(grep "gerrit.server" ${project_cfg} | cut -d '=' -f 2)
    author=$(grep "gerrit.author" ${project_cfg} | cut -d '=' -f 2)
-   custom_alias_writer "alias gq-$file-open=\"gerrit-query -S $server -P $port --project $p_name -s open\""
-   custom_alias_writer "alias gq-$file-merged=\"gerrit-query -S $server -P $port --project $p_name -s merged\""
-   custom_alias_writer "alias gq-$file-open-mine=\"gerrit-query -S $server -P $port --project $p_name -s open -a \\\"$author\\\"\""
-   custom_alias_writer "alias gq-$file-merged-mine=\"gerrit-query -S $server -P $port --project $p_name -s merged -a \\\"$author\\\"\""
+   custom_alias_writer "alias $file-qry-open=\"gerrit-query -S $server -P $port --project $p_name -s open\""
+   custom_alias_writer "alias $file-qry-merged=\"gerrit-query -S $server -P $port --project $p_name -s merged\""
+   custom_alias_writer "alias $file-qry-open-mine=\"gerrit-query -S $server -P $port --project $p_name -s open -a \\\"$author\\\"\""
+   custom_alias_writer "alias $file-qry-merged-mine=\"gerrit-query -S $server -P $port --project $p_name -s merged -a \\\"$author\\\"\""
+done
+
+
+custom_alias_writer ""
+custom_alias_writer "## To checkout the changes from gerrit"
+for file in $(ls ${g_repo_base})
+do
+   project_cfg=${g_repo_base}/${file}/project.cfg
+   [[ ! -f ${project_cfg} ]] && continue
+
+   p_name=$(grep "gerrit.name" ${project_cfg} | cut -d '=' -f 2)
+   port=$(grep "gerrit.port" ${project_cfg} | cut -d '=' -f 2)
+   server=$(grep "gerrit.server" ${project_cfg} | cut -d '=' -f 2)
+   author=$(grep "gerrit.author" ${project_cfg} | cut -d '=' -f 2)
+
+   custom_alias_writer "alias $file-checkout=\"gerrit-checkout $server:$port $p_name\""
+   custom_alias_writer "alias $file-cherrypick=\"gerrit-cherrypick $server:$port $p_name\""
 done
