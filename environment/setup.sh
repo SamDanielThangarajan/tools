@@ -164,38 +164,6 @@ function deploy_tmux_config
 
 }
 
-function setup_custom_alias_helper
-{
-   echo "$1" >> /home/${USER}/tools_alias
-}
-
-function setup_custom_alias
-{
-   rm -rf /home/${USER}/tools_alias
-
-   setup_custom_alias_helper "##########################################"
-   setup_custom_alias_helper "## Custom alias (${g_time})"
-   setup_custom_alias_helper "###"
-   setup_custom_alias_helper ""
-
-
-   setup_custom_alias_helper "# Setup git clones"
-   for file in $(ls ${g_repo_base})
-   do
-      setup_custom_alias_helper "alias ${file}=\"source \${TOOLS}/setclone.sh --project ${file} --clone\""
-   done
-   setup_custom_alias_helper ""
-
-   setup_custom_alias_helper "# Index projects"
-   for file in $(ls ${g_repo_base})
-   do
-      setup_custom_alias_helper "alias index-${file}=\"python \${TOOLS}/generatetags.py --project ${file} --clone\""
-   done
-   setup_custom_alias_helper ""
-
-
-}
-
 function touch_needed_config_files {
 if [[ ! -f ${g_nodes_config} ]];
 then
@@ -232,7 +200,8 @@ debug ""
 touch_needed_config_files
 debug ""
 
-setup_custom_alias
+# Write custom alias
+REPO_BASE=${g_repo_base} ${g_script_path}/write_tools_alias.sh
 
 echo "Created following back-up files..."
 for file in ${g_backedup_list[@]};

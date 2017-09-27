@@ -1,4 +1,5 @@
 alias sc="source ${TOOLS}/setclone.sh "
+alias generate-custom-alias="${TOOLS}/environment/write_tools_alias.sh"
 alias index="python ${TOOLS}/generatetags.py"
 
 #Project specific Checkout utilities
