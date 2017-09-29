@@ -23,11 +23,11 @@ REF=$4
 BRANCH=""
 [[ $# -eq 5 ]] && BRANCH=$5
 
-git fetch ssh://${USER}@${SERVER_AND_PORT}/${PROJECT} ${REF} && git ${OPERATION} FETCH_HEAD
+git fetch ssh://${USER}@${SERVER_AND_PORT}/${PROJECT} ${REF} >& /dev/null && git ${OPERATION} FETCH_HEAD >& /dev/null
 
 if [[ ${OPERATION}="checkout" && $# -eq 5 ]]
 then
-   git checkout -b ${BRANCH}
+   git checkout -b ${BRANCH} >& /dev/null
    cat <<EOF
    Upstream branch not set. use git branch to set it
 
@@ -35,6 +35,6 @@ then
    git branch --set-upstream-to=origin/master
 
 
-> Switched to ${BRANCH}
+> Switched to ${BRANCH} branch
 EOF
 fi
