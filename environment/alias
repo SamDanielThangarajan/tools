@@ -13,13 +13,13 @@ alias vg='valgrind --leak-check=full --show-reachable=yes --track-origins=yes'
 alias vimrc='vi ~/.vimrc'
 alias renamer='source ${TOOLS}/renamer.sh'
 alias delb="git branch -D "
+alias docker-ssh="source ${TOOLS}/docker_scripts/docker-ssh.sh"
 
 #Alias for Node related helpers
 source ${TOOLS}/node_helper.sh -s
+
 alias shell="ps -p $$ | grep -v CMD | cut -d ' ' -f 8"
 alias :q!="exit"
 alias vi='vim'
-
 alias tmuxl='source ${TOOLS}/tmux-login'
-
 alias cheat-tmux='less ${TOOLS}/cheatsheat/tmux'
