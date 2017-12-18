@@ -116,6 +116,9 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 # Setup nodes.cfg file
 export NODES_CONFIG=${g_nodes_config}
 
+# Write tool alias
+${g_tools_path}/environment/write_tools_alias.sh
+
 # Sourcing alias
 source ${g_tools_path}/environment/alias
 [[ -f /home/${USER}/tools_alias ]] && source /home/${USER}/tools_alias
