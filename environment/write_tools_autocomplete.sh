@@ -25,12 +25,13 @@ custom_ac_writer "## Auto complete (${g_time})"
 custom_ac_writer "###"
 custom_ac_writer ""
 
-
-custom_ac_writer "# Auto complete for setclones"
-custom_ac_writer "source ${TOOLS}/auto-complete-scripts/setclone-autocomplete.sh"
-custom_ac_writer ""
 for file in $(ls ${g_repo_base})
 do
    custom_ac_writer "complete -F _setclone ${file}"
 done
+custom_ac_writer ""
+
+custom_ac_writer "# Auto complete for setclones"
+custom_ac_writer "source ${TOOLS}/auto-complete-scripts/dockerssh-autocomplete.sh"
+custom_ac_writer ""
 custom_ac_writer ""

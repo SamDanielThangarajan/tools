@@ -124,10 +124,16 @@ ${g_tools_path}/environment/write_tools_autocomplete.sh
 
 # Sourcing alias
 source ${g_tools_path}/environment/alias
-[[ -f /home/${USER}/tools_alias ]] && source /home/${USER}/tools_alias
+[[ -f /home/${USER}/tools_alias ]] \
+   && source /home/${USER}/tools_alias
+
+# Sourcing static auto complete
+[[ -f ${g_tools_path}/auto-complete-scripts/setup.sh ]] \
+   && source ${g_tools_path}/auto-complete-scripts/setup.sh
 
 # Sourcing auto complete
-[[ -f /home/${USER}/tools_autocomplete ]] && source /home/${USER}/tools_autocomplete
+[[ -f /home/${USER}/tools_autocomplete ]] \
+   && source /home/${USER}/tools_autocomplete
 
 echo ""
 
