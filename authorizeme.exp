@@ -6,7 +6,7 @@ set user [lindex $argv 0]
 set node [lindex $argv 1]
 set key [lindex $argv 2]
 
-spawn sh -c "/usr/bin/ssh edansam@127.0.0.1 'mkdir -p ~/.ssh && echo ${key} >> ~/.ssh/authorized_keys'"
+spawn sh -c "/usr/bin/ssh ${USER}@127.0.0.1 'mkdir -p ~/.ssh && echo ${key} >> ~/.ssh/authorized_keys'"
 expect {
     "Password:" {
         puts "Enter the password:"
@@ -17,10 +17,7 @@ expect {
             "Continue." {
                 send "\n"
             }
-                
         }
-
-
     }
     "yes/no)?" {
         send "yes\n"
@@ -35,7 +32,6 @@ expect {
                         "Continue." {
                             send "\n"
                          }
-                
                     }
                 }
                 timeout {

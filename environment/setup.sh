@@ -116,12 +116,18 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 # Setup nodes.cfg file
 export NODES_CONFIG=${g_nodes_config}
 
-# Write tool alias
+# Write tool alias (for every new shell)
 ${g_tools_path}/environment/write_tools_alias.sh
+
+# write auto complete (for every new shell)
+${g_tools_path}/environment/write_tools_autocomplete.sh
 
 # Sourcing alias
 source ${g_tools_path}/environment/alias
 [[ -f /home/${USER}/tools_alias ]] && source /home/${USER}/tools_alias
+
+# Sourcing auto complete
+[[ -f /home/${USER}/tools_autocomplete ]] && source /home/${USER}/tools_autocomplete
 
 echo ""
 
@@ -206,6 +212,10 @@ debug ""
 # Write custom alias
 export REPO_BASE=${g_repo_base}
 ${g_script_path}/write_tools_alias.sh
+
+# Write auto complete
+export TOOLS=${g_tools_path}
+${g_script_path}/write_tools_autocomplete.sh
 
 echo "Created following back-up files..."
 for file in ${g_backedup_list[@]};
