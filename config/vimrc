@@ -29,6 +29,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'nvie/vim-flake8'
+Plugin 'majutsushi/tagbar'
 
 " TODO plugins to consider
 " commad t
@@ -367,8 +368,16 @@ map <C-F12> :!ctags -R --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
 "4. press 'x' to zoom in and zoom out
 "5. press 's' to sort the tag list
 "6. press 'space' to get function signature
-nnoremap <silent> <C-l> :TlistToggle<CR>
+nmap <F8> ::TlistToggle<CR>
 let Tlist_Show_One_File = 1
+
+"TAGBAR COMMANDs
+"
+"<space> on a tag to get the definition
+"<s> to sort the list
+"+,-,=,* to close and open folds
+nnoremap <silent> <C-l> :TagbarToggle<CR>
+
 
 
 "WINDOW NAVIGATION
