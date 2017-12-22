@@ -28,6 +28,7 @@ custom_ac_writer ""
 for file in $(ls ${g_repo_base})
 do
    custom_ac_writer "complete -F _setclone ${file}"
+   custom_ac_writer "complete -F _setclone index-${file}"
 done
 custom_ac_writer ""
 
