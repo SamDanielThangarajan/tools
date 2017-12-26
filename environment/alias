@@ -14,6 +14,7 @@ alias vimrc='vi ~/.vimrc'
 alias renamer='source ${TOOLS}/renamer.sh'
 alias delb="git branch -D "
 alias docker-ssh="source ${TOOLS}/docker_scripts/docker-ssh.sh"
+alias yr-mn-in-photo-dir="ls -1 | cut -d '_' -f 1 | sort | uniq | egrep  '^[0-9]{8}'| sed 's/.\{2\}$//' | sort | uniq"
 
 #Alias for Node related helpers
 source ${TOOLS}/node_helper.sh -s
