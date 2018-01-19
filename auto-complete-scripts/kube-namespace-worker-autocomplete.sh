@@ -9,6 +9,12 @@ _kuber()
 
    opts=""
 
+   kubectl -h >& /dev/null
+   [[ $? -ne 0 ]] \
+      && COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) ) \
+      && return
+
+
    # Prepare namespace
    if [[ ${COMP_CWORD} -eq 1 ]]
    then
