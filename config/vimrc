@@ -30,6 +30,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'nvie/vim-flake8'
 Plugin 'majutsushi/tagbar'
+Plugin 'fatih/vim-go'
 
 " TODO plugins to consider
 " commad t

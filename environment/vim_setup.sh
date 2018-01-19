@@ -120,5 +120,9 @@ for plugin in ${g_vim_bundle_dir}/*/; do
 done
 vim -u NONE -c "helptags ${g_vim_dir}/doc" -c q
 
-#8. Get back to same location
+#8. Install Go binaries
+# PErhaps this doesn't work now?
+vim +GoInstallBinaries +qall
+
+#END Get back to same location
 cd ${g_current_dir}
