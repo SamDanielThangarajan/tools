@@ -5,3 +5,6 @@ source ${TOOLS}/auto-complete-scripts/setclone-autocomplete.sh
 
 # _dockerssh
 source ${TOOLS}/auto-complete-scripts/dockerssh-autocomplete.sh
+
+#_kubeworker
+source ${TOOLS}/auto-complete-scripts/kube-namespace-worker-autocomplete.sh
