@@ -17,12 +17,25 @@ function login-to-pod(){
 }
 
 function exec-in-pod(){
-   pod=$i
+   pod=$1
+   shift
    echo "Executing $@ in $pod"
    echo ""
    echo ""
    kubectl exec $pod -n $namespace $@
 }
+
+function exec-all(){
+   get_pods="kubectl get pods -n pm -o=custom-columns=name:.metadata.name --no-headers"
+   for pod in $(${get_pods})
+   do
+      echo "Output from $pod"
+      exec-in-pod $pod $@
+      echo ""
+      echo ""
+   done
+}
+
 
 #Main
 $operation $@

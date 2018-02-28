@@ -24,11 +24,15 @@ _kuber()
    # Prepare subcommands
    if [[ ${COMP_CWORD} -eq 2 ]]
    then
-      opts="get-pods login-to-pod exec-in-pod"
+      opts="get-pods \
+         login-to-pod \
+         exec-in-pod \
+         exec-all"
    fi
 
    # Process Subcommands
-   if [[ ${COMP_WORDS[2]} = "get-pods" ]]
+   if [[ ${COMP_WORDS[2]} = "get-pods" ]] ||
+      [[ ${COMP_WORDS[2]} = "exec-all" ]]
    then
       COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
       return

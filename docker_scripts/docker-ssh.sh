@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-filename=$(basename $0)
-
 function usage()
 {
    cat <<EOF
 
 Usage:
-  $filename <id|name|-h> value [user]
+  $0 <id|name|-h> value [user]
 
 EOF
 }
@@ -28,12 +26,9 @@ _cont=`docker container ls --quiet --filter "$filter=$value\$"`
 
 [[ ! -n $_cont ]] && echo "No container found" && exit 1
 
-_ip=$(docker inspect $_cont \
-      | grep \"IPAddress\" \
-      | sed 's/\s*//g' \
-      | sed 's/[,"]//g' \
-      | sort | uniq \
-      | cut -d ":" -f 2)
+_ip=$(docker \
+   inspect $_cont \
+   -f {{.NetworkSettings.IPAddress}})
 
 echo "Logging in to $_ip"
 

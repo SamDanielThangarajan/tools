@@ -408,15 +408,6 @@ set shiftwidth=3
 set expandtab
 set softtabstop=3
 
-"Project specific indendation
-if !empty($PROJECT_NAME)
-   let project_name = $PROJECT_NAME
-   let user = $USER
-   let project_specific_config = "/home/" . user . "/project_vim_config/" . project_name . "/vimrc"
-   if filereadable(project_specific_config)
-      exe 'source' project_specific_config
-   endif
-endif
 
 filetype plugin indent on
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -499,3 +490,13 @@ colorscheme slate
 "colorscheme ron
 "colorscheme evening
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"Project specific indendation
+if !empty($PROJECT_NAME)
+   let project_name = $PROJECT_NAME
+   let user = $USER
+   let project_specific_config = "/home/" . user . "/project_vim_config/" . project_name . "/vimrc"
+   if filereadable(project_specific_config)
+      exe 'source' project_specific_config
+   endif
+endif
