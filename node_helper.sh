@@ -21,6 +21,25 @@ function act_on_exit_status {
 }
 
 function process_options {
+	for arg in $@
+	do
+      # Process key=value argument
+		if [[ $arg =~ ^[^=]+=[^=]+$ ]]
+		then
+			key=$(echo $arg | sed 's/=.\+//g')
+			value=$(echo $arg | sed 's/[^=]\+=//g')
+			[[ $key = "action" ]] && g_action=$value
+			[[ $key = "node" ]] && g_node=$value
+			[[ $key = "rpath" ]] && g_remotePath=$value
+      else
+         [[ $arg = "source-alias" ]] && g_sourceAliases="true"
+         [[ $arg = "list" ]] && g_listNodes="true"
+		fi
+	done
+}
+
+
+function process_options {
     OPTS=`getopt -o a:n:p:sl --long action:,node:,--remote-path:,--source-aliases,--list -n 'node_helper.sh' -- "$@"`
     act_on_exit_status $? "getopt"
     eval set -- "$OPTS"

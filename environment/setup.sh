@@ -186,7 +186,7 @@ if [[ ! -f ${g_nodes_config} ]];
 then
 cat <<ENC >${g_nodes_config}
 #config format
-#alias_name user_name ipAddress
+#alias_name node username password
 ENC
 echo "Fillin node details in ${g_nodes_config}.."
 fi

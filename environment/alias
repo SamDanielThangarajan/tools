@@ -26,7 +26,8 @@ alias prune-off-containers="docker container prune -f \
                             && docker network prune -f"
 
 #Alias for Node related helpers
-#source ${TOOLS}/node_helper.sh -s
+alias sn="$TOOLS/remote_scripts/show_nodes.sh"
+alias remote="$TOOLS/remote_scripts/node_helper.sh"
 
 alias shell="ps -p $$ | grep -v CMD | cut -d ' ' -f 8"
 alias :q!="exit"
@@ -37,3 +38,4 @@ alias cheat-tmux='less ${TOOLS}/cheatsheat/tmux'
 
 # Common alias
 alias ls='ls -GH'
+

@@ -8,3 +8,6 @@ source ${TOOLS}/auto-complete-scripts/dockerssh-autocomplete.sh
 
 #_kubeworker
 source ${TOOLS}/auto-complete-scripts/kube-namespace-worker-autocomplete.sh
+
+#_kubeworker
+source ${TOOLS}/auto-complete-scripts/nodehelper-autocomplete.sh

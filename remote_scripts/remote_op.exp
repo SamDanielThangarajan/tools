@@ -1,0 +1,48 @@
+#!/usr/bin/env expect -f
+
+# Commands
+# exec
+# login
+# scp
+# rscp
+# rsync
+
+# Parameters from alias script
+set cmd [ lindex $argv 0 ]
+set node [lindex $argv 1];
+set user [lindex $argv 2];
+set pwd [lindex $argv 3];
+
+proc authenticate { PASSWD } {
+   expect {
+      "*password:" { send -- "$PASSWD\r" }
+      "*(yes/no)?*" {
+         send -- "yes\r"
+            expect {
+               "*password:" { send -- "$PASSWD\r" }
+            }
+      }
+   }
+}
+
+
+if {[string equal {login} $cmd ]} {
+   spawn ssh $user@$node
+} elseif {[string equal {exec} $cmd]} {
+   set r_cmd [lindex $argv 4];
+   spawn ssh "$user@$node" "$r_cmd"
+} elseif {[string equal {rsync} $cmd ]} {
+   set src [lindex $argv 4];
+   set dest [lindex $argv 5];
+   spawn rsync -avz $src $user@$node:$dest
+} elseif {[string equal {scp} $cmd ]} {
+   set src [lindex $argv 4];
+   set dest [lindex $argv 5];
+   spawn scp -r $src $user@$node:$dest
+} elseif {[string equal {rscp} $cmd ]} {
+   set src [lindex $argv 4];
+   set dest [lindex $argv 5];
+   spawn scp -r $user@$node:$src $dest
+}
+authenticate $pwd
+interact
