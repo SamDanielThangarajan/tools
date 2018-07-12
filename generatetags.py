@@ -53,7 +53,7 @@ def processOptions(args):
 def createDirectoryForIndexFiles():
   global tag_fileM
   global cscope_dbM
-  directory = '/home/' + getpass.getuser() + '/project_tags/' + optionsM.project_name  + '/' + optionsM.clone_name + '/'
+  directory = os.environ['HOME'] + '/project_tags/' + optionsM.project_name  + '/' + optionsM.clone_name + '/'
   tag_fileM=directory + 'tags'
   cscope_dbM = directory + 'cscope.out'
   try:

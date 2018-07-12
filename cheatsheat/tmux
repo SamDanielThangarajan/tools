@@ -14,3 +14,14 @@ n,N for next and previous
 #copy
 Enter - if you're using Tmux vi mode
 ctrl-w or alt-w - if you're using Tmux emacs mode
+
+## In mac 
+#to copy
+ ctrl-a [ - enter buffer
+ go to start position
+ press space
+ finish selection
+ Enter
+#to paste
+ ctrl-a ]
+

@@ -5,8 +5,8 @@ g_script_name=$0
 g_cur_dir=$(dirname -- "${BASH_SOURCE[0]}")
 g_script_path=$(cd -P "$g_cur_dir" && pwd -P)
 g_tools_path=$(cd -P "$g_script_path"/.. && pwd -P)
-g_master_setup_file=/home/${USER}/setup_tools.sh
-g_nodes_config=/home/${USER}/nodes.cfg
+g_master_setup_file=${HOME}/setup_tools.sh
+g_nodes_config=${HOME}/nodes.cfg
 g_debug=0
 
 # Function to check exit status
@@ -23,28 +23,27 @@ function act_on_exit_status {
 
 #Arg exit status
 function print_usage_and_exit {
-   echo "Usage : ${g_script_name} -r <repo-base> -n <name> -e <email> [-dh]"
-   echo "      repo-base : parent directory for all projects"
-   echo "      name : name to be used in git config"
-   echo "      email : email to be used in git config"
+   cat<<EOF
+
+   Usage : ${g_script_name} repo-base=<dir> name=<name> email=<email> [debug]
+EOF
    exit $1
 }
 
 function process_options {
-    OPTS=`getopt -o r:n:e:dh --long repo-base:,debug,name:,email:,help -n 'setup.sh' -- "$@"`
-    act_on_exit_status $? "getopt"
-    eval set -- "$OPTS"
-
-    while true ; do
-        case "$1" in
-        -r|--repo-base ) g_repo_base=$2; shift 2;;
-        -d|--debug ) g_debug=1; shift ;;
-        -n|--name ) g_name=$2; shift 2;;
-        -e|--email ) g_email=$2; shift 2;;
-        -h|--help ) print_usage_and_exit 0;;
-        -- ) shift; break;;
-        * ) break ;;
-        esac
+    for arg in $@
+    do
+       if [[ $arg =~ ^[^=]+=[^=]+$ ]]
+       then
+          key=$(echo $arg | cut -d '=' -f 1)
+          value=$(echo $arg | cut -d '=' -f 2)
+          [[ $key = "repo-base" ]] && g_repo_base=$value
+          [[ $key = "name" ]] && g_name=$value
+          [[ $key = "email" ]] && g_email=$value
+       else
+          [[ $arg = "debug" ]] && g_debug=1
+          [[ $arg = "help" ]] && print_usage_and_exit 0
+       fi
     done
 
     debug "Repo base : ${g_repo_base}"
@@ -67,11 +66,11 @@ function backup_files {
 
    debug "Backing up files and folders"
    backup_list[0]=${g_master_setup_file}
-   backup_list[1]=/home/${USER}/.vimrc
-   backup_list[2]=/home/${USER}/.gitconfig
-   backup_list[3]=/home/${USER}/.tmux.conf
-   backup_list[3]=/home/${USER}/.vim
-   backup_list[4]=/home/${USER}/tools_alias
+   backup_list[1]=${HOME}/.vimrc
+   backup_list[2]=${HOME}/.gitconfig
+   backup_list[3]=${HOME}/.tmux.conf
+   backup_list[3]=${HOME}/.vim
+   backup_list[4]=${HOME}/tools_alias
 
    local i=0
    for file in ${backup_list[@]};
@@ -124,16 +123,16 @@ ${g_tools_path}/environment/write_tools_autocomplete.sh
 
 # Sourcing alias
 source ${g_tools_path}/environment/alias
-[[ -f /home/${USER}/tools_alias ]] \
-   && source /home/${USER}/tools_alias
+[[ -f ${HOME}/tools_alias ]] \
+   && source ${HOME}/tools_alias
 
 # Sourcing static auto complete
 [[ -f ${g_tools_path}/auto-complete-scripts/setup.sh ]] \
    && source ${g_tools_path}/auto-complete-scripts/setup.sh
 
 # Sourcing auto complete
-[[ -f /home/${USER}/tools_autocomplete ]] \
-   && source /home/${USER}/tools_autocomplete
+[[ -f ${HOME}/tools_autocomplete ]] \
+   && source ${HOME}/tools_autocomplete
 
 echo ""
 
@@ -144,6 +143,9 @@ if [ -f ~/reminders ]; then
    cat ~/reminders
 fi
 
+# Setting up colors
+export LSCOLORS="ExfxcxdxBxegecabagacad"
+
 EOI
 
 chmod +x ${g_master_setup_file}
@@ -152,10 +154,10 @@ debug "Writing master setup file ...done"
 
 function deploy_git_config
 {
-   local gitconfig=/home/${USER}/.gitconfig
+   local gitconfig=${HOME}/.gitconfig
    cp ${g_tools_path}/config/gitconfig ${gitconfig}
-   sed -i "s/@name/name = ${g_name}/g" ${gitconfig}
-   sed -i "s/@email/email = ${g_email}/g" ${gitconfig}
+   sed -i '' "s/@name/name = ${g_name}/g" ${gitconfig}
+   sed -i '' "s/@email/email = ${g_email}/g" ${gitconfig}
    debug "git config setup ...done"
 
    git --version >& /dev/null
@@ -168,7 +170,7 @@ function deploy_git_config
 
 function deploy_tmux_config
 {
-   cp ${g_tools_path}/config/tmux.conf /home/${USER}/.tmux.conf
+   cp ${g_tools_path}/config/tmux.conf ${HOME}/.tmux.conf
    debug "tmux config setup ...done"
 
    tmux -V >& /dev/null
@@ -230,6 +232,6 @@ do
 done
 echo ""
 
-echo "*** custom alias created in /home/${USER}/tools_alias"
+echo "*** custom alias created in ${HOME}/tools_alias"
 echo "*** ${g_master_setup_file} has to be sourced for every shell"
 

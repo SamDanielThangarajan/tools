@@ -30,10 +30,17 @@ _ip=$(docker \
    inspect $_cont \
    -f {{.NetworkSettings.IPAddress}})
 
-echo "Logging in to $_ip"
+if [[ -z ${_ip} ]]
+then
+   echo "Cannot get Ip, exec-ssh into the container"
+   docker exec -it $_cont /bin/sh
+else
+   echo "Logging in to $_ip"
 
-ssh_cmd_prefix=""
-[[ $# -eq 3 ]] && ssh_cmd_prefix="$3@"
+   ssh_cmd_prefix=""
+   [[ $# -eq 3 ]] && ssh_cmd_prefix="$3@"
 
-#Performing ssh
-ssh $ssh_cmd_prefix$_ip
+   #Performing ssh
+   ssh $ssh_cmd_prefix$_ip
+fi
+

@@ -3,13 +3,13 @@
 #script to install all vim plugins and setup vim config file
 #Next step is to remove all these things and make use of vundle
 
-g_project_vim_config="/home/${USER}/project_vim_config"
+g_project_vim_config="${HOME}/project_vim_config"
 g_script_dir=$(dirname $0)
 g_script_path=$(cd -P "$g_script_dir" && pwd -P)
 g_tools_path=$(cd -P "$g_script_path"/.. && pwd -P)
 g_current_dir=$(pwd)
-g_vim_dir="/home/${USER}/.vim/"
-g_vim_bundle_dir="/home/${USER}/.vim/bundle/"
+g_vim_dir="${HOME}/.vim/"
+g_vim_bundle_dir="${HOME}/.vim/bundle/"
 g_redirect=/dev/null
 g_nobackup=0
 

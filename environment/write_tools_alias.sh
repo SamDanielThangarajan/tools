@@ -7,7 +7,7 @@ g_repo_base=${REPO_BASE}
 
 function custom_alias_writer
 {
-   echo "$1" >> /home/${USER}/tools_alias
+   echo "$1" >> ${HOME}/tools_alias
 }
 
 ################################
@@ -16,7 +16,7 @@ function custom_alias_writer
 
 echo "Writing custom alias on ${g_time}"
 
-rm -rf /home/${USER}/tools_alias
+rm -rf ${HOME}/tools_alias
 
 custom_alias_writer "##########################################"
 custom_alias_writer "## Custom alias (${g_time})"

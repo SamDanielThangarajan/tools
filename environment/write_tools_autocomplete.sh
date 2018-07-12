@@ -5,7 +5,7 @@
 
 g_time=$(date +%T)
 g_repo_base=${REPO_BASE}
-g_autocomplete_file=/home/${USER}/tools_autocomplete
+g_autocomplete_file=${HOME}/tools_autocomplete
 
 function custom_ac_writer
 {

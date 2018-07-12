@@ -49,7 +49,7 @@ def processOptions(args):
 
 
 def getTagFile(project,clone):
-  tag_file='/home/' + getpass.getuser() + '/project_tags/' + project + '/' + clone + '/tags'
+  tag_file=os.environ['HOME'] + '/project_tags/' + project + '/' + clone + '/tags'
   return tag_file
 
 def findFile():

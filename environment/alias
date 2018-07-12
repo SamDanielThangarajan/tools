@@ -7,6 +7,9 @@ alias gerrit-query="${TOOLS}/gerrit-tools/gerrit-query.py"
 alias gerrit-checkout='${TOOLS}/gerrit-tools/gerrit-load.sh checkout'
 alias gerrit-cherrypick='${TOOLS}/gerrit-tools/gerrit-load.sh cherry-pick'
 
+#Git tools
+alias git-rebase-remote="source ${TOOLS}/git_scripts/rebase_remote_branch.sh "
+
 #Utilities
 alias ff="python ${TOOLS}/findFileinclone.py --file"
 alias vg='valgrind --leak-check=full --show-reachable=yes --track-origins=yes'
@@ -18,12 +21,19 @@ alias yr-mn-in-photo-dir="ls -1 | cut -d '_' -f 1 | sort | uniq | egrep  '^[0-9]
 alias open-files="${TOOLS}/vi_changed_files.py"
 alias k8s-del-resources="${TOOLS}/kubernetes_scripts/delete_all_resources_in_a_namespace.sh"
 alias kuber="source ${TOOLS}/kubernetes_scripts/kube-namespace-worker.sh"
+alias prune-off-containers="docker container prune -f \
+                            && docker volume prune -f \
+                            && docker network prune -f"
 
 #Alias for Node related helpers
-source ${TOOLS}/node_helper.sh -s
+#source ${TOOLS}/node_helper.sh -s
 
 alias shell="ps -p $$ | grep -v CMD | cut -d ' ' -f 8"
 alias :q!="exit"
 alias vi='vim'
 alias tmuxl='source ${TOOLS}/tmux-login'
 alias cheat-tmux='less ${TOOLS}/cheatsheat/tmux'
+
+
+# Common alias
+alias ls='ls -GH'

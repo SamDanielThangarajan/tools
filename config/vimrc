@@ -31,6 +31,9 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'nvie/vim-flake8'
 Plugin 'majutsushi/tagbar'
 Plugin 'fatih/vim-go'
+Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'airblade/vim-rooter'
+Plugin 'Shougo/deoplete.nvim'
 
 " TODO plugins to consider
 " commad t
@@ -255,10 +258,8 @@ nnoremap <leader>n :call NumberToggle()<cr>
 autocmd InsertEnter * :call MyInsertEnter()
 autocmd InsertLeave * :call MyInsertLeave()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 "To copy text to system clipboard
-:set clipboard=unnamed
-:set clipboard=unnamedplus
+if has('macunix') | :set clipboard=unnamed | else | :set clipboard=unnamedplus | endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "CURSOR LINE DEFINITION
 "Set The cursore line for easy line spotting
@@ -324,6 +325,9 @@ endif
 "ALT + ] => jump in new vertical tab
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+
+" Some tab mapping (TODO)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -351,7 +355,7 @@ let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
 let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" automatically open and close the popup menu / preview window
+"" automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
 map <C-F12> :!ctags -R --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
@@ -494,9 +498,40 @@ colorscheme slate
 "Project specific indendation
 if !empty($PROJECT_NAME)
    let project_name = $PROJECT_NAME
-   let user = $USER
-   let project_specific_config = "/home/" . user . "/project_vim_config/" . project_name . "/vimrc"
+   let homedir = $HOME
+   let project_specific_config = homedir . "/project_vim_config/" . project_name . "/vimrc"
    if filereadable(project_specific_config)
       exe 'source' project_specific_config
    endif
 endif
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"JAVA autocomplete 2
+"autocmd FileType java setlocal omnifunc=javacomplete#Complete
+"let g:JavaComplete_JavaviLogfileDirectory = '/Users/samtha/tmp/javavilog'
+"let g:JavaComplete_JavaviDebug = 1
+"
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_smart_case = 1
+"
+"" disable autocomplete by default
+""let b:deoplete_disable_auto_complete=1 
+""let g:deoplete_disable_auto_complete=1
+""call deoplete#custom#buffer_option('auto_complete', v:false)
+"
+"if !exists('g:deoplete#omni#input_patterns')
+"   let g:deoplete#omni#input_patterns = {}
+"endif
+"
+"" Disable the candidates in Comment/String syntaxes.
+"call deoplete#custom#source('_',
+"             \ 'disabled_syntaxes', ['Comment', 'String'])
+"
+"autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"Alias
+command Hexmode :%!xxd
+command Hexmoderevert :%!xxd -r
