@@ -27,7 +27,7 @@ alias prune-off-containers="docker container prune -f \
 
 #Alias for Node related helpers
 alias sn="$TOOLS/remote_scripts/show_nodes.sh"
-alias remote="$TOOLS/remote_scripts/node_helper.sh"
+alias remote="$TOOLS/remote_scripts/remote.sh"
 
 alias shell="ps -p $$ | grep -v CMD | cut -d ' ' -f 8"
 alias :q!="exit"
