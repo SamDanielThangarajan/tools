@@ -29,6 +29,23 @@ alias prune-off-containers="docker container prune -f \
 alias sn="$TOOLS/remote_scripts/show_nodes.sh"
 alias remote="$TOOLS/remote_scripts/remote.sh"
 
+#Alias for file finder
+alias ff="$TOOLS/findfileinclone.sh"
+alias ff-greedy="$TOOLS/findfileinclone.sh --greedy"
+alias ff-exact="$TOOLS/findfileinclone.sh --exact-match"
+for type in c cc cpp h hpp hh py pl erl java
+do
+   alias ff.$type="ff type=$type"
+   alias ff.$type-greedy="ff-greedy type=$type"
+   alias ff.$type-exact="ff-exact type=$type"
+done
+alias ff.header="ff type=h type=hh type=hpp"
+alias ff.header-greedy="ff.header --greedy"
+alias ff.header-exact="ff.header --exact-match"
+alias ff.source="ff type=c type=cc type=cpp"
+alias ff.source-greedy="ff.source --greedy"
+alias ff.source-exact="ff.source --exact-match"
+
 alias shell="ps -p $$ | grep -v CMD | cut -d ' ' -f 8"
 alias :q!="exit"
 alias vi='vim'

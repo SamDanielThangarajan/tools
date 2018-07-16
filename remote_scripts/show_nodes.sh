@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-# Create an alternate screen
-tput smcup
+. $TOOLS/common.sh
 
-function restore_screen() {
-   rm -rf .sn.tmp 2>/dev/null
-   tput rmcup
-   exit 0
+# Create an alternate screen
+enter_alt_screen
+
+function exit_pgm() {
+   exit_restore_screen
 }
-trap restore_screen INT
+trap exit_pgm INT
 
 function show_nodes() {
    echo "ALIAS NODE USER"  > $1
@@ -25,8 +25,4 @@ show_nodes .sn.tmp
 cat .sn.tmp | column -t
 
 # Escape
-while true
-do
-   read -n 1 var
-   [[ $var = 'q' ]] && restore_screen
-done
+read_escape_cmd && exit_pgm
