@@ -49,7 +49,6 @@ function create_new_session()
     tmux new -s $SESSION_NAME
 }
 
-echo "calling populate"
 populate_sessions
 
 if [[ ${#SESSIONS[@]} -gt 0 ]]; then

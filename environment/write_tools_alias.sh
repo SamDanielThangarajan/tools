@@ -85,6 +85,7 @@ do
    passd=$(echo $line | awk '{print $4}')
    custom_alias_writer "alias login-${alias}=\"${TOOLS}/remote_scripts/remote_op.exp login $node $user $passd\""
    custom_alias_writer "alias rsync-${alias}=\"${TOOLS}/remote_scripts/remote_op.exp rsync $node $user $passd\""
+   custom_alias_writer "alias rrsync-${alias}=\"${TOOLS}/remote_scripts/remote_op.exp rrsync $node $user $passd\""
    custom_alias_writer "alias scp-${alias}=\"${TOOLS}/remote_scripts/remote_op.exp scp $node $user $passd\""
    custom_alias_writer "alias rscp-${alias}=\"${TOOLS}/remote_scripts/remote_op.exp rscp $node $user $passd\""
    custom_alias_writer "alias exec-${alias}=\"${TOOLS}/remote_scripts/remote_op.exp exec $node $user $passd\""

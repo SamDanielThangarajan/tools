@@ -10,9 +10,9 @@ alias=$1 && shift
 
 node_cfg=$(egrep "^$alias " ~/nodes.cfg)
 
-
 $TOOLS/remote_scripts/remote_op.exp \
    $cmd \
    $(echo $node_cfg | awk '{print $2 " " $3 " " $4}') \
-   $@
+   "$@"
+
 

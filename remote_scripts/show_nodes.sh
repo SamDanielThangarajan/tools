@@ -6,6 +6,7 @@
 enter_alt_screen
 
 function exit_pgm() {
+   rm -rf .sn.tmp >& /dev/null
    exit_restore_screen
 }
 trap exit_pgm INT

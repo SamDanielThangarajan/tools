@@ -6,6 +6,7 @@
 # scp
 # rscp
 # rsync
+# rrsync
 
 # Parameters from alias script
 set cmd [ lindex $argv 0 ]
@@ -34,7 +35,11 @@ if {[string equal {login} $cmd ]} {
 } elseif {[string equal {rsync} $cmd ]} {
    set src [lindex $argv 4];
    set dest [lindex $argv 5];
-   spawn rsync -avz $src $user@$node:$dest
+   spawn rsync -avz --stats $src $user@$node:$dest
+} elseif {[string equal {rrsync} $cmd ]} {
+   set src [lindex $argv 4];
+   set dest [lindex $argv 5];
+   spawn rsync -chavzP --stats $user@$node:$src $dest
 } elseif {[string equal {scp} $cmd ]} {
    set src [lindex $argv 4];
    set dest [lindex $argv 5];

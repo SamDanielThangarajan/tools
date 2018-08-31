@@ -5,7 +5,7 @@ These scripts help in having alias names for remote nodes and accessing them usi
 
 Automation include  
 - login to remote node
-- rsync to remote node
+- rsync to and from a remote node
 - scp to and from a remote location
 - executing a command on remote node
 
@@ -35,7 +35,7 @@ Note: remote.sh has a variable $TOOLS, replace it to appropriate location
 
 There are 2 ways to use these automations
 - Approach 1: Create separate aliases for each node
-- Approach 2: Create one alias and autocomplete the action(login, exec, scp, rsync) and node alias using TAB
+- Approach 2: Create one alias and autocomplete the action(login, exec, scp, rsync, rrsync) and node alias using TAB
 
 #### 1.3.1 Approach 1
 Paste the following script in your bash_profile
@@ -52,6 +52,7 @@ do
    passwd=$(echo $line | awk '{print $4}')
    alias login-${alias}="<PATH>/remote_scripts/remote_op.exp login $node $user $passwd"
    alias rsync-${alias}="<PATH>/remote_scripts/remote_op.exp rsync $node $user $passwd"
+   alias rrsync-${alias}="<PATH>/remote_scripts/remote_op.exp rrsync $node $user $passwd"
    alias scp-${alias}="<PATH>/remote_scripts/remote_op.exp scp $node $user $passwd"
    alias rscp-${alias}="<PATH>/remote_scripts/remote_op.exp rscp $node $user $passwd"
    alias exec-${alias}="<PATH>/remote_scripts/remote_op.exp exec $node $user $passwd"
@@ -84,6 +85,7 @@ Hitting TAB should list the complete the command with node alias.
 login-TAB          # login to the node using it alias
 exec-TAB "CMD"   # Executes the command on the target node
 rsync-TAB src dest # Rsync the src on your local computer to remote node
+rrsync-TAB src dest # rRsync the src on your remote computer to local node
 scp-TAB src dest   # Scp the src on your local to remote  
 rscp-TAB src dest  # Scp the src from remote node to dest on your local
 ```
@@ -98,6 +100,7 @@ login
 scp
 rscp
 rsync
+rrsync
 
 # Next (sets of) TAB autocompletes the node Aliases
 

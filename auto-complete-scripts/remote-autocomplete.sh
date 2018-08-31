@@ -10,7 +10,7 @@ _remoteop()
    opts=""
    if [[ ${COMP_CWORD} -eq 1 ]]
    then
-      opts="login exec scp rscp rsync"
+      opts="login exec scp rscp rsync rrsync"
    else
       opts=$(cat ~/nodes.cfg | egrep -v '^#|^$' | awk '{print $1}' | tr "\n" " ")
    fi

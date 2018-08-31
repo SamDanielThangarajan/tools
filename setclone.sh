@@ -4,7 +4,7 @@
 OPTS=`getopt -o p:c: --long project:,clone: -n 'setclone.sh' -- "$@"`
 if [ $? != 0 ]
 then
-    exit 1
+    return 1
 fi
 eval set -- "$OPTS"
 
