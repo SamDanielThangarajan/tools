@@ -31,14 +31,14 @@ EOF
 }
 
 function process_options {
-    for arg in $@
+    for arg in "$@"
     do
-       if [[ $arg =~ ^[^=]+=[^=]+$ ]]
+       if [[ "$arg" =~ ^[^=]+=[^=]+$ ]]
        then
           key=$(echo $arg | cut -d '=' -f 1)
           value=$(echo $arg | cut -d '=' -f 2)
           [[ $key = "repo-base" ]] && g_repo_base=$value
-          [[ $key = "name" ]] && g_name=$value
+          [[ $key = "name" ]] && g_name="$value"
           [[ $key = "email" ]] && g_email=$value
        else
           [[ $arg = "debug" ]] && g_debug=1
@@ -47,6 +47,8 @@ function process_options {
     done
 
     debug "Repo base : ${g_repo_base}"
+    debug "Name : ${g_name}"
+    debug "Email : ${g_email}"
     if [[ -z ${g_repo_base} ]] || [[ -z ${g_name} ]] || [[ -z ${g_email} ]];
     then
        print_usage_and_exit 1
@@ -196,7 +198,7 @@ fi
 ## Main
 ###
 
-process_options $@
+process_options "$@"
 
 backup_files 
 debug ""
@@ -224,6 +226,9 @@ ${g_script_path}/write_tools_alias.sh
 # Write auto complete
 export TOOLS=${g_tools_path}
 ${g_script_path}/write_tools_autocomplete.sh
+
+# Run mactoos setup
+${g_tools_path}/mactools/setup.sh
 
 echo "Created following back-up files..."
 for file in ${g_backedup_list[@]};

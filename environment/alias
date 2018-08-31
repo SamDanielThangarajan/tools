@@ -56,3 +56,7 @@ alias cheat-tmux='less ${TOOLS}/cheatsheat/tmux'
 # Common alias
 alias ls='ls -GH'
 
+
+# Mac alias for finding running services
+alias show-services="launchctl print user/$(id -u $(whoami)) | grep sam"
+
