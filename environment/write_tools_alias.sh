@@ -34,7 +34,7 @@ custom_alias_writer ""
 custom_alias_writer "# Index projects"
 for file in $(ls ${g_repo_base})
 do
-   custom_alias_writer "alias index-${file}=\"python \${TOOLS}/generatetags.py --project ${file} --clone\""
+   custom_alias_writer "alias index-${file}=\"\${TOOLS}/generate-tags.sh project-name=${file}\""
 done
 custom_alias_writer ""
 
