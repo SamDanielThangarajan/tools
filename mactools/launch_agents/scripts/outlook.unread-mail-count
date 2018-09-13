@@ -1,0 +1,8 @@
+#!/usr/bin/osascript
+tell application "Microsoft Outlook"
+
+	 set thisOutlookMailInBox to mail folder "Inbox" of default account
+    set OutlookUnreadCount to count of (messages of thisOutlookMailInBox whose is read is false)
+    do shell script "echo " & OutlookUnreadCount
+
+end tell

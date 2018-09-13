@@ -55,6 +55,7 @@ alias cheat-tmux='less ${TOOLS}/cheatsheat/tmux'
 
 # Common alias
 alias ls='ls -GH'
+alias show-colors="$TOOLS/colors.sh"
 
 
 # Mac alias for finding running services
