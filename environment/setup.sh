@@ -98,7 +98,7 @@ function write_master_setup_file {
 
 debug "Writing master setup file"
 
-cat<<EOI >${g_master_setup_file} 
+cat<<EOI >${g_master_setup_file}
 
 #!/usr/bin/env bash
 
@@ -158,8 +158,14 @@ function deploy_git_config
 {
    local gitconfig=${HOME}/.gitconfig
    cp ${g_tools_path}/config/gitconfig ${gitconfig}
-   sed -i '' "s/@name/name = ${g_name}/g" ${gitconfig}
-   sed -i '' "s/@email/email = ${g_email}/g" ${gitconfig}
+   if [[ $(uname -s) = "Darwin" ]]
+   then
+      sed -i ' ' "s/@name/name = ${g_name}/g" ${gitconfig}
+      sed -i ' ' "s/@email/email = ${g_email}/g" ${gitconfig}
+   else
+      sed -i "s/@name/name = ${g_name}/g" ${gitconfig}
+      sed -i "s/@email/email = ${g_email}/g" ${gitconfig}
+   fi
    debug "git config setup ...done"
 
    git --version >& /dev/null
@@ -203,7 +209,7 @@ fi
 
 process_options "$@"
 
-backup_files 
+backup_files
 debug ""
 
 write_master_setup_file
