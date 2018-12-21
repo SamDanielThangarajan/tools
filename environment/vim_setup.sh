@@ -84,7 +84,7 @@ if [[ ${g_nobackup} -eq 0 ]];then
    [[ -d ~/.vim ]] && cp -r ~/.vim ~/vim.backup
 fi
 rm -rf ~/.vim
-mkdir ~/.vim
+mkdir -p ~/.vim/backup
 
 #2. Create project specific vim locations
 [[ -d ${g_project_vim_config} ]] || mkdir ${g_project_vim_config}
