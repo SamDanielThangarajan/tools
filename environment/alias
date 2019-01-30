@@ -24,6 +24,9 @@ alias kuber="source ${TOOLS}/kubernetes_scripts/kube-namespace-worker.sh"
 alias prune-off-containers="docker container prune -f \
                             && docker volume prune -f \
                             && docker network prune -f"
+alias show-repos="$TOOLS/repo_scripts/utils.sh showrepos"
+alias create-repo="$TOOLS/repo_scripts/utils.sh createrepo"
+alias create-clone="$TOOLS/repo_scripts/utils.sh createclone"
 
 #Alias for Node related helpers
 alias sn="$TOOLS/remote_scripts/show_nodes.sh"
@@ -48,6 +51,7 @@ alias ff.source-exact="ff.source --exact-match"
 
 alias shell="ps -p $$ | grep -v CMD | cut -d ' ' -f 8"
 alias :q!="exit"
+alias q!="exit"
 alias vi='vim'
 alias tmuxl='source ${TOOLS}/tmux-login'
 alias cheat-tmux='less ${TOOLS}/cheatsheat/tmux'
@@ -60,4 +64,3 @@ alias show-colors="$TOOLS/colors.sh"
 
 # Mac alias for finding running services
 alias show-services="launchctl print user/$(id -u $(whoami)) | grep sam"
-

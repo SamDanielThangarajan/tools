@@ -11,3 +11,6 @@ source ${TOOLS}/auto-complete-scripts/kube-namespace-worker-autocomplete.sh
 
 #_remote
 source ${TOOLS}/auto-complete-scripts/remote-autocomplete.sh
+
+#_createclone
+source ${TOOLS}/auto-complete-scripts/createclone-autocomplete.sh
