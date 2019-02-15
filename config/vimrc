@@ -25,7 +25,7 @@ Plugin 'tpope/vim-pathogen'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'kien/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'nvie/vim-flake8'
@@ -34,12 +34,20 @@ Plugin 'fatih/vim-go'
 Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'airblade/vim-rooter'
 Plugin 'Shougo/deoplete.nvim'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+
 
 " TODO plugins to consider
 " commad t
 " Look in github page for vundle for more plugins
 call vundle#end()
 
+let $VIM='~/.vim/'
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" vim basic config
@@ -208,7 +216,7 @@ endif " has("autocmd")
 :let g:ttcn_fold = 1
 
 com! -ra I call VisBlockIncr()
-au VimLeave * echo "                  Thanks for using VIM   - Sam Daniel Thangarajan !!!"
+au VimLeave * echo "                  github.com/SamDanielThangarajan !!!"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -216,16 +224,17 @@ au VimLeave * echo "                  Thanks for using VIM   - Sam Daniel Thanga
 """"" Sam Daniel Custom profile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+:let mapleader = '`'
+
 if isdirectory("~/.vim/bundle/vim-pathogen")
    execute pathogen#infect()
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "backup dir
 set backupdir=~/.vim/backup
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Set numbering
 :se rnu
 function! NumberToggle()
@@ -250,6 +259,9 @@ endfunc
 
 function MyInsertLeave()
    :call SetRNumber()
+   "TODO trial for cursorline to be back
+   set cursorline
+   hi CursorLine term=bold cterm=bold guibg=Grey40
 endfunc
 
 function MyInsertEnter()
@@ -262,69 +274,42 @@ nnoremap <leader>n :call NumberToggle()<cr>
 :au FocusGained * :call SetRNumber()
 autocmd InsertEnter * :call MyInsertEnter()
 autocmd InsertLeave * :call MyInsertLeave()
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 "To copy text to system clipboard
 if has('macunix') | :set clipboard=unnamed | else | :set clipboard=unnamedplus | endif
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 "CURSOR LINE DEFINITION
-"Set The cursore line for easy line spotting
-"set cursorline
-":hi CursorLine term=bold cterm=bold guibg=Grey40 "fallback to this version
-":hi CursorLine   ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-":hi CursorColumn ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-"color desert
-"set cursorline
-"hi CursorLine term=bold cterm=bold guibg=Grey40
-" " Default Colors for CursorLine
-"highlight  CursorLine ctermbg=red ctermfg=green
-" " Change Color when entering Insert Mode
-"autocmd InsertEnter * highlight  CursorLine ctermbg=Green ctermfg=Red
-" " Revert Color to default when leaving Insert Mode
-"autocmd InsertLeave * highlight  CursorLine term=bold cterm=bold guibg=Grey40
-"
-"CURSORLINE DEFINITION
 set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey40
-"autocmd InsertEnter * highlight  CursorLine ctermbg=Yellow ctermfg=Red term=bold cterm=bold
-"autocmd InsertEnter * highlight  CursorLine ctermbg=Yellow ctermfg=Black term=bold cterm=bold
 autocmd InsertEnter * highlight  CursorLine ctermbg=DarkBlue ctermfg=LightGrey term=bold cterm=bold
 autocmd InsertLeave * highlight  CursorLine ctermbg=NONE ctermfg=NONE term=bold cterm=bold guibg=Grey40
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"ENABLE PYTHON HIGHLIGHTING                                                                                                                                          
-syntax on
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "SET THE INDENT FOLDING IN THE PROGRAMS
-"set foldmethod=indent
+set foldmethod=indent
 "set foldmethod=syntax
-"set foldlevel=3
+set foldlevel=2
 "za - toggle
 "zc - close
 "zo - open
 "and all commands with caps A C O.. to do all folds
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "SET TAG FILES
-"tags created using ~/tools/generatetags/generatetags.py
+"tags created using ~/tools/Ggenerate-tags.sh
 set tags=~/project_tags/${PROJECT_NAME}/${CLONE_NAME}/tags
 set tags+=~/project_tags/c++_header_tags/tags
-"set tags+=~/project_tags/poco/tags 
-set tags+=~/project_tags/maf/tags 
 set tags+=~/project_tags/sys_tags
 set tags+=~/project_tags/gmock/tags
 set tags+=~/project_tags/boost/tags
-
 if has("cscope")
     set nocsverb
     cs add ~/project_tags/${PROJECT_NAME}/${CLONE_NAME}/cscope.out
 endif    
-
 "CTRL + ] => normal jump in same buffer
 "CTRL + \ => jump in new tab
 "ALT + ] => jump in new vertical tab
@@ -332,62 +317,18 @@ map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 
-" Some tab mapping (TODO)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "ENABLE SYNTAX HIGHLIGHTING
 syntax enable
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax on
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "GIT COMMIT
 autocmd Filetype gitcommit setlocal spell textwidth=72
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"OMNICCCOMPLETE
-"Use the below commands to make autocomplete in vi for cpp files.
-set nocp
-filetype plugin on
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_NamespaceSearch = 2
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-"" automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest,preview
-map <C-F12> :!ctags -R --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"CUSTOM KEY BINDINGS
-"
-"TAGlIST COMMANDs
-"
-"Important commands
-"1. CTRL + t : open the taglist window
-"2. ENTER the tag to opent the particular tag
-"3. press 'o' to open the tag in a new window
-"4. press 'x' to zoom in and zoom out
-"5. press 's' to sort the tag list
-"6. press 'space' to get function signature
-nmap <F8> ::TlistToggle<CR>
-let Tlist_Show_One_File = 1
 
 "TAGBAR COMMANDs
-"
 "<space> on a tag to get the definition
 "<s> to sort the list
 "+,-,=,* to close and open folds
 nnoremap <silent> <C-l> :TagbarToggle<CR>
-
 
 
 "WINDOW NAVIGATION
@@ -398,109 +339,70 @@ nnoremap <silent> <C-Down> <c-w>j
 
 "CTAGS
 "map <F3> <C-]> "F3 used down
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "TAGLIST OPTIONS
 "http://vim-taglist.sourceforge.net/manual.html
-let Tlist_Enable_Fold_Column = 0
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Use_Right_Window = 1
-let Tlist_Compact_Format = 1
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let Tlist_Enable_Fold_Column = 0
+"let Tlist_Exit_OnlyWindow = 1
+"let Tlist_Use_Right_Window = 1
+"let Tlist_Compact_Format = 1
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "TABS TO SPACE
-set smartindent
-set tabstop=3
-set shiftwidth=3
+set tabstop=2
+set shiftwidth=2
 set expandtab
-set softtabstop=3
+set tabstop=2
+set softtabstop=2
 
 
 filetype plugin indent on
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"TABS TO SPACE
+
 "Open NERD TREE by default if no files are present
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-"Open NERDTREE by default (disabled for now)
-"`autocmd vimenter * NERDTree`
 
 "Close vi only if NERDTREE is the only buffer open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-"Key mappings
 map <C-n> :NERDTreeToggle<CR>
-
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "MISC.
 "Spell check
 :nnoremap <F3> : set spell spelllang=en_us<CR>
 :nnoremap <F4> :set nospell<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"SYNTASTIC
-"
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_cpp_check_header = 1
-"let g:syntastic_cpp_compiler = 'clang++'
-"let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-let g:syntastic_cpp_checkers = ['gcc']
-let g:syntastic_cpp_compiler = 'gcc'
-let g:syntastic_cpp_compiler_options = '-std=c++11'
-let g:syntastic_error_symbol = "x"
-let g:syntastic_warning_symbol = "W"
-let g:syntastic_style_error_symbol = "sE"
-let g:syntastic_enable_balloons = 1
-
-"Make it available only on demand
-"let b:syntastic_mode = "passive"
-let g:syntastic_mode_map = { "mode": "passive"}
-:nnoremap <F9> :SyntasticCheck<CR>
-:nnoremap <F10> :SyntasticReset<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Defined macros
 ":nnoremap <leader>C :'<,'>s/^/\/\/<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"VIM FUGITIVE
-"1. Edit files.
-"2. :GStatus
-"3. '-' to add files to staging area
-"4. 'r' in nerdtree to get it reflected
-"5. :GCommit
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+command Hexmode :%!xxd
+command Hexmoderevert :%!xxd -r
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"GVIM
+
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>]  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>\  :YcmCompleter GoToReferences<CR>
+let g:ycm_confirm_extra_conf = 0
+
+
+"Utilsnips
+"let g:UltiSnipsExpandTrigger="<c-s>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 colorscheme slate
-"colorscheme ron
-"colorscheme evening
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"Project specific indendation
+
+"Project specific vim config (indent, commands, etc.,)
+"This should be always the last
 if !empty($PROJECT_NAME)
    let project_name = $PROJECT_NAME
    let homedir = $HOME
@@ -509,34 +411,3 @@ if !empty($PROJECT_NAME)
       exe 'source' project_specific_config
    endif
 endif
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"JAVA autocomplete 2
-"autocmd FileType java setlocal omnifunc=javacomplete#Complete
-"let g:JavaComplete_JavaviLogfileDirectory = '/Users/samtha/tmp/javavilog'
-"let g:JavaComplete_JavaviDebug = 1
-"
-"let g:deoplete#enable_at_startup = 1
-"let g:deoplete#enable_smart_case = 1
-"
-"" disable autocomplete by default
-""let b:deoplete_disable_auto_complete=1 
-""let g:deoplete_disable_auto_complete=1
-""call deoplete#custom#buffer_option('auto_complete', v:false)
-"
-"if !exists('g:deoplete#omni#input_patterns')
-"   let g:deoplete#omni#input_patterns = {}
-"endif
-"
-"" Disable the candidates in Comment/String syntaxes.
-"call deoplete#custom#source('_',
-"             \ 'disabled_syntaxes', ['Comment', 'String'])
-"
-"autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"Alias
-command Hexmode :%!xxd
-command Hexmoderevert :%!xxd -r

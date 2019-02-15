@@ -78,7 +78,7 @@ while read line
 do
    [[ $line =~ ^# ]] && continue
    token_count=$(echo $line | wc -w)
-   [[ $token_count -ne 4 ]] && echo "Warning! Skipping processing of $line from $HOME/nodes.cfg" && continue
+   [[ $token_count -ne 4 ]] && continue
    alias=$(echo $line | awk '{print $1}')
    node=$(echo $line | awk '{print $2}')
    user=$(echo $line | awk '{print $3}')

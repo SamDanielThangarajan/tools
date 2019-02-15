@@ -27,6 +27,7 @@ alias prune-off-containers="docker container prune -f \
 alias show-repos="$TOOLS/repo_scripts/utils.sh showrepos"
 alias create-repo="$TOOLS/repo_scripts/utils.sh createrepo"
 alias create-clone="$TOOLS/repo_scripts/utils.sh createclone"
+alias rm-tilda="find . -name '*~' | xargs rm -f"
 
 #Alias for Node related helpers
 alias sn="$TOOLS/remote_scripts/show_nodes.sh"

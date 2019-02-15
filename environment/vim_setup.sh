@@ -120,9 +120,20 @@ for plugin in ${g_vim_bundle_dir}/*/; do
 done
 vim -u NONE -c "helptags ${g_vim_dir}/doc" -c q
 
-#8. Install Go binaries
+#8. Install ftplugin files
+mkdir -p ${g_vim_dir}/ftplugin/
+for file in $($g_tools_path/config/*.vim)
+do
+  cp -r $file ${g_vim_dir}/ftplugin/
+done
+
+#9. Install Go binaries
 # PErhaps this doesn't work now?
 vim +GoInstallBinaries +qall
+
+#10. Add reminder to install flake8
+echo "python[3] -m pip install flake8" >> ~/manual_work
+echo "Install Mac vim" >> ~/manual_work
 
 #END Get back to same location
 cd ${g_current_dir}

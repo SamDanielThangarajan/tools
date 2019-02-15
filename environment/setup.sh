@@ -249,3 +249,5 @@ echo ""
 echo "*** custom alias created in ${HOME}/tools_alias"
 echo "*** ${g_master_setup_file} has to be sourced for every shell"
 
+cat ~/manual_work
+rm -rf ~/manual_work
