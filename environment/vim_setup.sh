@@ -103,7 +103,7 @@ fi
 #act_on_exit_status $? "Deploy vimrc"
 rm -rf ~/.vimrc
 cat <<EOI > ~/.vimrc
-let tools_path = '${g_tools_path}/config/vimrc'
+let tools_path = '${g_tools_path}/config/vim/vimrc'
 if filereadable(tools_path)
    exe 'source' tools_path
 endif
@@ -112,7 +112,7 @@ EOI
 #6. Install Plugins
 vim +PluginInstall +qall
 mkdir ~/.vim/plugin
-cp ${g_tools_path}/config/cscope_maps.vim ~/.vim/plugin
+cp ${g_tools_path}/config/vim/cscope_maps.vim ~/.vim/plugin
 
 #7. Import all the helptags
 for plugin in ${g_vim_bundle_dir}/*/; do
@@ -122,7 +122,7 @@ vim -u NONE -c "helptags ${g_vim_dir}/doc" -c q
 
 #8. Install ftplugin files
 mkdir -p ${g_vim_dir}/ftplugin/
-for file in $($g_tools_path/config/*.vim)
+for file in $($g_tools_path/config/vim/*.vim)
 do
   cp -r $file ${g_vim_dir}/ftplugin/
 done

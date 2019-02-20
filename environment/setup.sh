@@ -118,13 +118,13 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export NODES_CONFIG=${g_nodes_config}
 
 # Write tool alias (for every new shell)
-${g_tools_path}/environment/write_tools_alias.sh
+${g_tools_path}/config/shell/write_tools_alias.sh
 
 # write auto complete (for every new shell)
-${g_tools_path}/environment/write_tools_autocomplete.sh
+${g_tools_path}/config/shell/write_tools_autocomplete.sh
 
 # Sourcing alias
-source ${g_tools_path}/environment/alias
+source ${g_tools_path}/config/shell/alias
 [[ -f ${HOME}/tools_alias ]] \
    && source ${HOME}/tools_alias
 
@@ -157,7 +157,7 @@ debug "Writing master setup file ...done"
 function deploy_git_config
 {
    local gitconfig=${HOME}/.gitconfig
-   cp ${g_tools_path}/config/gitconfig ${gitconfig}
+   cp ${g_tools_path}/config/git/gitconfig ${gitconfig}
    if [[ $(uname -s) = "Darwin" ]]
    then
       sed -i ' ' "s/@name/name = ${g_name}/g" ${gitconfig}
@@ -181,7 +181,7 @@ function deploy_tmux_config
    echo "Install powerline-status and powerline-fonts"
    #https://medium.com/@elviocavalcante/5-steps-to-improve-your-terminal-appearance-on-mac-osx-f58b20058c84
    #https://github.com/powerline/fonts
-   cp ${g_tools_path}/config/tmux.conf ${HOME}/.tmux.conf
+   cp ${g_tools_path}/config/tmux/tmux.conf ${HOME}/.tmux.conf
    debug "tmux config setup ...done"
 
    tmux -V >& /dev/null
