@@ -209,7 +209,11 @@ fi
 
 process_options "$@"
 
-backup_files
+[[ $(uname -s) = "Darwin" ]] \
+  && . ${g_script_path}/mac_precheck.sh \
+  || . ${g_script_path}/lnx_precheck.sh
+
+backup_files 
 debug ""
 
 write_master_setup_file
