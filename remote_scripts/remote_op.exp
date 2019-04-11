@@ -26,6 +26,12 @@ proc authenticate { PASSWD } {
    }
 }
 
+# To make the resize work
+trap {
+ set XZ [stty rows   ]
+ set YZ [stty columns]
+ stty rows $XZ columns $YZ < $spawn_out(slave,name)
+} WINCH
 
 if {[string equal {login} $cmd ]} {
    spawn ssh $user@$node
