@@ -216,7 +216,6 @@ endif " has("autocmd")
 :let g:ttcn_fold = 1
 
 com! -ra I call VisBlockIncr()
-au VimLeave * echo "                  github.com/SamDanielThangarajan !!!"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -224,6 +223,8 @@ au VimLeave * echo "                  github.com/SamDanielThangarajan !!!"
 """"" Sam Daniel Custom profile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au VimLeave * echo "                  github.com/SamDanielThangarajan !!!"
+set cursorline
 
 :let mapleader = '`'
 
@@ -259,13 +260,12 @@ endfunc
 
 function MyInsertLeave()
    :call SetRNumber()
-   "TODO trial for cursorline to be back
-   set cursorline
-   hi CursorLine term=bold cterm=bold guibg=Grey40
+   hi CursorLine term=NONE,underline ctermfg=NONE ctermbg=236 guibg=#353535
 endfunc
 
 function MyInsertEnter()
    :call SetNumber()
+   hi CursorLine ctermbg=DarkBlue ctermfg=LightGrey term=bold cterm=bold
 endfunc
 
 
@@ -280,17 +280,10 @@ autocmd InsertLeave * :call MyInsertLeave()
 if has('macunix') | :set clipboard=unnamed | else | :set clipboard=unnamedplus | endif
 
 
-"CURSOR LINE DEFINITION
-set cursorline
-hi CursorLine term=bold cterm=bold guibg=Grey40
-autocmd InsertEnter * highlight  CursorLine ctermbg=DarkBlue ctermfg=LightGrey term=bold cterm=bold
-autocmd InsertLeave * highlight  CursorLine ctermbg=NONE ctermfg=NONE term=bold cterm=bold guibg=Grey40
-
-
 "SET THE INDENT FOLDING IN THE PROGRAMS
-"set foldmethod=indent
+set foldmethod=indent
 "set foldmethod=syntax
-"set foldlevel=2
+set foldlevel=4
 "za - toggle
 "zc - close
 "zo - open
@@ -371,6 +364,7 @@ map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']
 
 
 "MISC.
