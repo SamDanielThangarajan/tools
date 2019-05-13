@@ -281,9 +281,9 @@ if has('macunix') | :set clipboard=unnamed | else | :set clipboard=unnamedplus |
 
 
 "SET THE INDENT FOLDING IN THE PROGRAMS
-set foldmethod=indent
+"set foldmethod=indent
 "set foldmethod=syntax
-set foldlevel=4
+"set foldlevel=4
 "za - toggle
 "zc - close
 "zo - open
@@ -405,3 +405,6 @@ if !empty($PROJECT_NAME)
       exe 'source' project_specific_config
    endif
 endif
+
+" Fold and unfold
+nnoremap <leader>f :set nofoldenable<cr>
