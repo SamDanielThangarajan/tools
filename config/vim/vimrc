@@ -23,7 +23,6 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-pathogen'
 Plugin 'vim-scripts/taglist.vim'
-Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'kien/ctrlp.vim'
@@ -31,7 +30,6 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'nvie/vim-flake8'
 Plugin 'majutsushi/tagbar'
 Plugin 'fatih/vim-go'
-Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'airblade/vim-rooter'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'sheerun/vim-polyglot'
@@ -236,6 +234,7 @@ endif
 "backup dir
 set backupdir=~/.vim/backup
 
+
 "Set numbering
 :se rnu
 function! NumberToggle()
@@ -281,9 +280,6 @@ if has('macunix') | :set clipboard=unnamed | else | :set clipboard=unnamedplus |
 
 
 "SET THE INDENT FOLDING IN THE PROGRAMS
-"set foldmethod=indent
-"set foldmethod=syntax
-"set foldlevel=4
 "za - toggle
 "zc - close
 "zo - open
@@ -313,6 +309,8 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 "ENABLE SYNTAX HIGHLIGHTING
 syntax enable
 syntax on
+filetype plugin indent on
+colorscheme slate
 
 "GIT COMMIT
 autocmd Filetype gitcommit setlocal spell textwidth=72
@@ -330,33 +328,19 @@ nnoremap <silent> <C-Left> <c-w>h
 nnoremap <silent> <C-Up> <c-w>k
 nnoremap <silent> <C-Down> <c-w>j
 
-"CTAGS
-"map <F3> <C-]> "F3 used down
-
-
-"TAGLIST OPTIONS
-"http://vim-taglist.sourceforge.net/manual.html
-"let Tlist_Enable_Fold_Column = 0
-"let Tlist_Exit_OnlyWindow = 1
-"let Tlist_Use_Right_Window = 1
-"let Tlist_Compact_Format = 1
-
-
-"TABS TO SPACE
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set tabstop=2
-set softtabstop=2
-
-
-filetype plugin indent on
-
+"Spacing
+setlocal tabstop=2
+setlocal softtabstop=2
+setlocal shiftwidth=2
+setlocal textwidth=79
+setlocal expandtab
+setlocal autoindent
+setlocal smarttab
+setlocal fileformat=unix
 
 "Open NERD TREE by default if no files are present
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
 
 "Close vi only if NERDTREE is the only buffer open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -371,14 +355,10 @@ let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']
 "Spell check
 :nnoremap <F3> : set spell spelllang=en_us<CR>
 :nnoremap <F4> :set nospell<CR>
-
-
-"Defined macros
-":nnoremap <leader>C :'<,'>s/^/\/\/<CR>
-
-
+nnoremap <leader>f :set nofoldenable<cr>
 command Hexmode :%!xxd
 command Hexmoderevert :%!xxd -r
+command Reload :so $MYVIMRC
 
 
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -392,8 +372,6 @@ let g:ycm_confirm_extra_conf = 0
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-colorscheme slate
-
 
 "Project specific vim config (indent, commands, etc.,)
 "This should be always the last
@@ -405,6 +383,3 @@ if !empty($PROJECT_NAME)
       exe 'source' project_specific_config
    endif
 endif
-
-" Fold and unfold
-nnoremap <leader>f :set nofoldenable<cr>

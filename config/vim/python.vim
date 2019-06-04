@@ -7,3 +7,4 @@ setlocal autoindent
 setlocal smarttab
 setlocal fileformat=unix
 let python_highlight_all=1
+colorscheme 256-grayvim
