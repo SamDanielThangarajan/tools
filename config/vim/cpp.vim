@@ -6,3 +6,4 @@ setlocal expandtab
 setlocal autoindent
 setlocal smarttab
 setlocal fileformat=unix
+colorscheme evening
