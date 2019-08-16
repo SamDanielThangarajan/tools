@@ -9,6 +9,8 @@ plainB_yelF="#[fg=colour3,bg=colour238]"
 yelB_blaF="#[fg=colour0,bg=colour3]"
 plainB_greF="#[fg=colour118,bg=colour238]"
 greB_blaF="#[fg=colour0,bg=colour118]"
+plainB_greenF="#[fg=colour46,bg=colour238]"
+greenB_yellowF="#[fg=colour220,bg=colour46]"
 
 rc="$HOME/.tmuxstatusrc"
 
@@ -35,23 +37,42 @@ function prunesetupbackups() {
 function timesheetslave() {
    open -na safari $(cat ${rc}/timesheet.url)
 }
+
 function tmuxunreadmailcount() {
    count=$(${TOOLS}/mactools/launch_agents/scripts/outlook.unread-mail-count)
    if [[ $count -eq 0 ]]
    then
       echo "" > $rc/unread
    else
-      #echo "${plainB_redF}${redB_whiteF} Mails: $count${reset_color}" > $rc/unread
-      echo "${plainB_blueF}${blueB_whiteF} Mails: $count${reset_color}" > $rc/unread
+      echo "${plainB_redF}${redB_whiteF} Mails: $count${reset_color}" > $rc/unread
    fi
    sleep 15
 }
 
+function gmailinboxunreadcount() {
+   export HTTPS_PROXY=$(cat ${HOME}/.tmuxstatusrc/https_proxy)
+   count=$(${TOOLS}/google_scripts/gmail/get_label.py -t ${HOME}/.gmail/.creds/token.json -l INBOX -f threadsUnread 2> /tmp/error.txt)
+   if [[ $? -ne 0 ]]
+   then
+      echo "${plainB_redF}${redB_whiteF} gmail: !*${reset_color}" > $rc/gmail.unread
+   else
+      if [[ $count -eq 0 ]]
+      then
+	echo "" > $rc/gmail.unread
+      else
+         echo "${plainB_redF}${redB_whiteF} gmail: $count${reset_color}" > $rc/gmail.unread
+      fi
+   fi
+   sleep 15
+}
+
+# Function that lists all the service agents to be launched.
 function list-service-info() {
    cat <<EOS
 prunedockercontainers:300
 prunesetupbackups:3600
 tmuxunreadmailcount:30
+gmailinboxunreadcount:60
 EOS
 }
 

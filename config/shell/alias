@@ -10,6 +10,10 @@ alias gerrit-cherrypick='${TOOLS}/gerrit-tools/gerrit-load.sh cherry-pick'
 #Git tools
 alias git-rebase-remote="source ${TOOLS}/git_scripts/rebase_remote_branch.sh "
 
+#Google Tools
+alias gmail-aa="${TOOLS}/google_scripts/gmail/aa.py"
+alias gmail-inbox-unread='${TOOLS}/google_scripts/gmail/get_label.py -t ${GMAIL_TOKEN_FILE} -l INBOX'
+
 #Utilities
 alias ff="python ${TOOLS}/findFileinclone.py --file"
 alias vg='valgrind --leak-check=full --show-reachable=yes --track-origins=yes'

@@ -148,6 +148,10 @@ fi
 # Setting up colors
 export LSCOLORS="ExfxcxdxBxegecabagacad"
 
+# Setting up gmail client
+export GMAIL_SECRET_FILE="${HOME}/.gmail/.creds/credentials.json"
+export GMAIL_TOKEN_FILE="${HOME}/.gmail/.creds/token.json"
+
 EOI
 
 chmod +x ${g_master_setup_file}
