@@ -18,6 +18,7 @@ echo "Setting up Mac tools... "
 
 ns=com.sam.mactools
 template_file=${ns}.service.plist.tmpl
+dir_template_file=${ns}.dirservice.plist.tmpl
 timed_template_file=${ns}.timedservice.plist.tmpl
 
 function load_service_agent() {
@@ -28,6 +29,25 @@ function load_service_agent() {
       | sed "s#@TOOLS@#${TOOLS}#g" \
       | sed "s#@SERVICE@#${service}#g" \
       | sed "s#@INTERVAL@#${interval}#g" \
+      > ${HOME}/Library/LaunchAgents/${ns}.${service}.plist
+
+   launchctl unload -w ${HOME}/Library/LaunchAgents/${ns}.${service}.plist 2>/dev/null
+   launchctl load -w ${HOME}/Library/LaunchAgents/${ns}.${service}.plist
+
+   [[ $? -ne 0 ]] \
+      && echo "mactools> WARNING! Loading of $service failed!"
+}
+
+function load_dir_service_agent() {
+   service=$1 && shift
+   dir_to_mon=$1
+
+   rm -rf ${dir_to_mon} 2> /dev/null && mkdir -p ${dir_to_mon}
+
+   cat $TOOLS/mactools/launch_agents/${dir_template_file} \
+      | sed "s#@TOOLS@#${TOOLS}#g" \
+      | sed "s#@SERVICE@#${service}#g" \
+      | sed "s#@DIR_MONITOR@#${dir_to_mon}#g" \
       > ${HOME}/Library/LaunchAgents/${ns}.${service}.plist
 
    launchctl unload -w ${HOME}/Library/LaunchAgents/${ns}.${service}.plist 2>/dev/null
@@ -70,6 +90,7 @@ function load_timedservice_agent() {
       && echo "mactools> WARNING! Loading of $service failed!"
 }
 
+#Load OnDemand LaunmchAgents
 for service in $(${script_dir}/launch_agents/scripts/launch_agent.sh list-service-info)
 do
    s=$(echo $service | cut -d ':' -f 1)
@@ -77,6 +98,17 @@ do
    load_service_agent $s $i
 done
 
+
+#Load DirMonitor LaunmchAgents
+for service in $(${script_dir}/launch_agents/scripts/launch_agent.sh list-dir-service-info)
+do
+   s=$(echo $service | cut -d ':' -f 1)
+   d=$(echo $service | cut -d ':' -f 2)
+   load_dir_service_agent $s $d
+done
+
+
+#Load TimerBased LaunmchAgents
 for service in $(${script_dir}/launch_agents/scripts/launch_agent.sh list-timedservice-info)
 do
    echo $service

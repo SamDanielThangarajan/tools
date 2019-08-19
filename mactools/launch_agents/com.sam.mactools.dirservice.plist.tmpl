@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sam.mactools.@SERVICE@</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+       <key>TOOLS</key>
+       <string>@TOOLS@</string>
+    </dict>
+
+    <key>ProgramArguments</key>
+    <array>
+       <string>@TOOLS@/mactools/launch_agents/scripts/launch_agent.sh</string>
+       <string>@SERVICE@</string>
+       <string>@DIR_MONITOR@</string>
+    </array>
+
+    <key>QueueDirectories</key>
+    <array>
+        <string>@DIR_MONITOR@</string>
+    </array>
+    
+</dict>
+</plist>
+

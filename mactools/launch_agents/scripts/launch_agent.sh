@@ -13,6 +13,7 @@ plainB_greenF="#[fg=colour46,bg=colour238]"
 greenB_yellowF="#[fg=colour220,bg=colour46]"
 
 rc="$HOME/.tmuxstatusrc"
+push_notification_dir="${HOME}/.pushnotification"
 
 [[ -z ${TOOLS} ]] \
    && >&2 echo "ENV{TOOLS} not defined" \
@@ -66,6 +67,16 @@ function gmailinboxunreadcount() {
    sleep 15
 }
 
+function pushnotification() {
+   for f in `ls ${push_notification_dir}/*`
+   do
+      title=$(awk -F':' '{print $1}' $f)
+      desc=$(awk -F':' '{print $2}' $f)
+      $(${TOOLS}/mactools/launch_agents/scripts/push-notification "${title}" "${desc}")
+      rm -rf $f
+   done
+}
+
 # Function that lists all the service agents to be launched.
 function list-service-info() {
    cat <<EOS
@@ -75,6 +86,14 @@ tmuxunreadmailcount:30
 gmailinboxunreadcount:60
 EOS
 }
+
+# Funtion for all directory service
+function list-dir-service-info() {
+   cat <<EOS
+pushnotification:${push_notification_dir}
+EOS
+}
+
 
 function list-timedservice-info() {
 #service:minute:hour:day:weekday:Month   
