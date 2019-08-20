@@ -6,4 +6,7 @@ setlocal expandtab
 setlocal autoindent
 setlocal smarttab
 setlocal fileformat=unix
+setlocal makeprg=g++\ -std=c++17\ %\ -o\ %<.exec
 colorscheme evening
+nnoremap <F7> : make \| cw<CR>
+nnoremap <F8> : !./%<.exec<CR>

@@ -124,14 +124,20 @@ vim -u NONE -c "helptags ${g_vim_dir}/doc" -c q
 mkdir -p ${g_vim_dir}/ftplugin/
 for file in $($g_tools_path/config/vim/*.vim)
 do
-  cp -r $file ${g_vim_dir}/ftplugin/
+  ln -s ${g_vim_dir}/ftplugin/${file} ${g_vim_dir}/ftplugin/{file}
 done
 
-#9. Install Go binaries
+#9. Install NerdTree mappings
+mkdir -p ${g_vim_dir}/nerdtree_plugin/
+ln -s $g_tools_path/config/vim/nerdtree_plugin/mappings.vim ${g_vim_dir}/nerdtree_plugin/mappings.vim
+
+
+
+#10. Install Go binaries
 # PErhaps this doesn't work now?
 vim +GoInstallBinaries +qall
 
-#10. Add reminder to install flake8
+#11. Add reminder to install flake8
 echo "python[3] -m pip install flake8" >> ~/manual_work
 echo "Install Mac vim" >> ~/manual_work
 
