@@ -319,7 +319,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 "<space> on a tag to get the definition
 "<s> to sort the list
 "+,-,=,* to close and open folds
-nnoremap <silent> <C-l> :TagbarToggle<CR>
+nnoremap <silent> <leader>l :TagbarToggle<CR>
 
 
 "WINDOW NAVIGATION
@@ -353,6 +353,9 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeIgnore = ['\.pyc$', '\.pyo$', '__pycache__$']
+"Enabling the below removes the git marker
+let NERDTreeShowLineNumbers=1
+autocmd FileType nerdtree setlocal relativenumber
 
 
 "MISC.
