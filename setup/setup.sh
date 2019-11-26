@@ -68,11 +68,9 @@ function backup_files {
 
    debug "Backing up files and folders"
    backup_list[0]=${g_master_setup_file}
-   backup_list[1]=${HOME}/.vimrc
-   backup_list[2]=${HOME}/.gitconfig
-   backup_list[3]=${HOME}/.tmux.conf
-   backup_list[3]=${HOME}/.vim
-   backup_list[4]=${HOME}/tools_alias
+   backup_list[1]=${HOME}/.gitconfig
+   backup_list[2]=${HOME}/.tmux.conf
+   backup_list[3]=${HOME}/tools_alias
 
    local i=0
    for file in ${backup_list[@]};
@@ -224,7 +222,7 @@ write_master_setup_file
 debug ""
 
 echo "Setting up vim configuration, please wait"
-${g_script_path}/vim_setup.sh -n
+${g_tools_path}/vim/setup.sh -v -n --reminder-file=~/manual_work
 debug ""
 
 deploy_git_config
