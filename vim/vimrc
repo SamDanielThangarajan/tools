@@ -274,6 +274,8 @@ nnoremap <leader>n :call NumberToggle()<cr>
 autocmd InsertEnter * :call MyInsertEnter()
 autocmd InsertLeave * :call MyInsertLeave()
 
+"Set filetype for yaml
+au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml
 
 "To copy text to system clipboard
 if has('macunix') | :set clipboard=unnamed | else | :set clipboard=unnamedplus | endif
