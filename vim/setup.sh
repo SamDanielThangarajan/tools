@@ -118,6 +118,7 @@ cat <<EOF > ${TMP_REMINDER_FILE}
 VIM reminders:
 python[3] -m pip install flake8
 Install Mac vim
+pip3 install yamllint (https://github.com/adrienverge/yamllint)
 EOF
 
 [[ -n ${REMINDER_REDIRECT} ]] && cat ${TMP_REMINDER_FILE} >> ${REMINDER_REDIRECT} || cat ${TMP_REMINDER_FILE}

@@ -1,0 +1,2 @@
+How to write shared library
+https://akkadia.org/drepper/dsohowto.pdf

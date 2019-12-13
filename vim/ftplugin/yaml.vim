@@ -60,6 +60,18 @@ hi link yamlDelimiter	Delimiter
 hi link yamlString	String
 hi link yamlEscape	Special
 
+
+" Local changes
+"
+
+function! YamlLint()
+  let l:filename=expand('%:p')
+  let l:cmd = 'yamllint -f parsable ' . l:filename
+  :call setqflist([], ' ', {
+        \'lines': systemlist(l:cmd),
+	\'title' : l:cmd }) | copen
+endfunction
+
 set foldmethod=indent
 setlocal tabstop=2
 setlocal softtabstop=2
@@ -70,4 +82,5 @@ setlocal autoindent
 setlocal smarttab
 setlocal fileformat=unix
 colorscheme evening
+nnoremap <F7> : call YamlLint()<CR>
 

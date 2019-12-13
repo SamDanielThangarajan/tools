@@ -33,6 +33,7 @@ alias create-repo="$TOOLS/repo_scripts/utils.sh createrepo"
 alias create-clone="$TOOLS/repo_scripts/utils.sh createclone"
 alias rm-tilda="find . -name '*~' | xargs rm -f"
 alias docker-images="docker images --format '{{.ID}}:    {{.Repository}}:{{.Tag}}' $@"
+alias docker-ps="docker ps --format '{{.ID}}:{{.Names}} ->  {{.Image}}' $@"
 
 #Alias for Node related helpers
 alias sn="$TOOLS/remote_scripts/show_nodes.sh"

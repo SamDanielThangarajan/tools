@@ -23,6 +23,6 @@ nnoremap <F9> : !./%<.exec<CR>
 nnoremap <F8> : call ExecuteFile()<CR>
 
 "nasty way of getting my needed colors, use the exact same order
-colorscheme evening
+"colorscheme evening
 colorscheme slate
 colorscheme evening

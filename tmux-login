@@ -4,6 +4,7 @@
 declare -a SESSIONS
 declare SESSION_NAME
 
+
 function populate_sessions()
 {
     i=0
