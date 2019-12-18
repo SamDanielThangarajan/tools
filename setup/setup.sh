@@ -183,7 +183,7 @@ function deploy_tmux_config
    echo "Install powerline-status and powerline-fonts"
    #https://medium.com/@elviocavalcante/5-steps-to-improve-your-terminal-appearance-on-mac-osx-f58b20058c84
    #https://github.com/powerline/fonts
-   cp ${g_tools_path}/config/tmux/tmux.conf ${HOME}/.tmux.conf
+   ln -s ${g_tools_path}/config/tmux/tmux.conf ${HOME}/.tmux.conf
    debug "tmux config setup ...done"
 
    tmux -V >& /dev/null

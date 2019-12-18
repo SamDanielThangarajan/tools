@@ -78,6 +78,44 @@ function pushnotification() {
    done
 }
 
+function monitorvisastatus() {
+
+  tmp_op=$rc/visastat.tmp
+  op=$rc/visastat
+  control_no=$(cat $rc/visastat.inp)
+  url="https://www.migrationsverket.se/Kontakta-oss/Min-sida-och-Kontrollera-din-ansokan/Kontrollera-din-ansokan-utan-inloggning.html"
+  rm -rf ${tmp_op} 2>/dev/null
+
+  # If previous curl failed, don't query again.. Manual fix is needed
+  # To prevent getting locked out in proxy.
+  if [[ -f $op ]]
+  then
+    grep -q visa-monitor-failed:FIX_PROXY $op
+    [[ $? -eq 0 ]] && sleep 15 && return
+  fi
+
+  HTTPS_PROXY=$(cat $rc/https_proxy) /usr/bin/curl -s -d "typenr=2&q=${control_no}" -X POST ${url} -o $tmp_op
+
+  [[ $? -ne 0 ]] \
+	  && echo "${plainB_redF}${redB_whiteF} visa-monitor-failed:FIX_PROXY ${reset_color}" > $op \
+	  && sleep 15 && return
+
+  grep ">I väntan på beslut<" ${tmp_op} | grep -q 'class="active"'
+  [[ $? -eq 0 ]] \
+	  && echo "${plainB_yelF}${yelB_blaF} visa-pending ${reset_color}" > $op \
+	  && sleep 15 && return
+
+  grep ">Beslut fattat<" ${tmp_op} | grep -q 'class="active"'
+  [[ $? -eq 0 ]] \
+	  && echo "${plainB_greF}${greB_blaF} visa-decided ${reset_color}" > $op \
+	  && sleep 15 && return
+
+  echo "${plainB_redF}${redB_whiteF} visa-monitor-failed ${reset_color}" > $op
+  sleep 15
+}
+
+
+
 # Function that lists all the service agents to be launched.
 function list-service-info() {
    cat <<EOS
@@ -85,6 +123,7 @@ prunedockercontainers:300
 prunesetupbackups:3600
 tmuxunreadmailcount:30
 gmailinboxunreadcount:60
+monitorvisastatus:1800
 EOS
 }
 
