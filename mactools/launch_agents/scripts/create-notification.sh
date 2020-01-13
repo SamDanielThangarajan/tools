@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-[[ $# -ne 2 ]] && \
-	echo "Usage : create-notification <title> <desc>"  \
-	exit 1
+[[ $# -ne 2 ]] \
+	&& echo "Usage : create-notification <title> <desc>"  \
+	&& exit 1
 
 push_notification_dir="${HOME}/.pushnotification"
 
