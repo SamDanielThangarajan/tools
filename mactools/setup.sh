@@ -20,6 +20,12 @@ ns=com.sam.mactools
 template_file=${ns}.service.plist.tmpl
 dir_template_file=${ns}.dirservice.plist.tmpl
 timed_template_file=${ns}.timedservice.plist.tmpl
+config_dir=$HOME/.launchagents
+
+function create_service_config() {
+    service=$1
+    [[ ! -f $config_dir/$service ]] && echo "switch: on" >> $config_dir/$service
+}
 
 function load_service_agent() {
    service=$1 && shift
@@ -30,6 +36,8 @@ function load_service_agent() {
       | sed "s#@SERVICE@#${service}#g" \
       | sed "s#@INTERVAL@#${interval}#g" \
       > ${HOME}/Library/LaunchAgents/${ns}.${service}.plist
+
+   create_service_config $service
 
    launchctl unload -w ${HOME}/Library/LaunchAgents/${ns}.${service}.plist 2>/dev/null
    launchctl load -w ${HOME}/Library/LaunchAgents/${ns}.${service}.plist
@@ -49,6 +57,8 @@ function load_dir_service_agent() {
       | sed "s#@SERVICE@#${service}#g" \
       | sed "s#@DIR_MONITOR@#${dir_to_mon}#g" \
       > ${HOME}/Library/LaunchAgents/${ns}.${service}.plist
+
+   create_service_config $service
 
    launchctl unload -w ${HOME}/Library/LaunchAgents/${ns}.${service}.plist 2>/dev/null
    launchctl load -w ${HOME}/Library/LaunchAgents/${ns}.${service}.plist
@@ -72,6 +82,8 @@ function load_timedservice_agent() {
       | sed "s#@SERVICE@#${service}#g" \
       > ${df}
 
+   create_service_config $service
+
    [[ $minute != "-" ]] && \
       sed -i '' "s#.*@MINUTE@.*#<key>Minute</Key><integer>$minute</integer>#g" ${df}
    [[ $hour != "-" ]] && \
@@ -89,6 +101,8 @@ function load_timedservice_agent() {
    [[ $? -ne 0 ]] \
       && echo "mactools> WARNING! Loading of $service failed!"
 }
+
+mkdir -p $config_dir/
 
 #Load OnDemand LaunmchAgents
 for service in $(${script_dir}/launch_agents/scripts/launch_agent.sh list-service-info)

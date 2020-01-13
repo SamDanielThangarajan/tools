@@ -8,6 +8,5 @@ setlocal smarttab
 setlocal fileformat=unix
 let python_highlight_all=1
 colorscheme evening
-"colorscheme 256-grayvim
-"colorscheme xterm16
+colorscheme 256-grayvim
 nnoremap <F8> : !./%<CR>

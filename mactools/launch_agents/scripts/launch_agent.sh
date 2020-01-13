@@ -21,6 +21,7 @@ push_notification_dir="${HOME}/.pushnotification"
 
 # Extract the operation
 operation=$1 && shift
+config_file=$HOME/.launchagents/$operation
 
 function prunedockercontainers() {
    /usr/local/bin/docker container prune -f
@@ -52,19 +53,18 @@ function tmuxunreadmailcount() {
 
 function gmailinboxunreadcount() {
    export HTTPS_PROXY=$(cat ${HOME}/.tmuxstatusrc/https_proxy)
-   #count=$(${TOOLS}/google_scripts/gmail/get_label.py -t ${HOME}/.gmail/.creds/token.json -l INBOX -f threadsUnread 2> /tmp/error.txt)
-   #if [[ $? -ne 0 ]]
-   #then
-   #   echo "${plainB_redF}${redB_whiteF} gmail: !*${reset_color}" > $rc/gmail.unread
-   #else
-   #   if [[ $count -eq 0 ]]
-   #   then
-   #	echo "" > $rc/gmail.unread
-   #   else
-   #      echo "${plainB_redF}${redB_whiteF} gmail: $count${reset_color}" > $rc/gmail.unread
-   #   fi
-   #fi
-   echo "${plainB_redF}${redB_whiteF} gmail: -${reset_color}" > $rc/gmail.unread
+   count=$(${TOOLS}/google_scripts/gmail/get_label.py -t ${HOME}/.gmail/.creds/token.json -l INBOX -f threadsUnread 2> /tmp/error.txt)
+   if [[ $? -ne 0 ]]
+   then
+      echo "${plainB_redF}${redB_whiteF} gmail: -${reset_color}" > $rc/gmail.unread
+   else
+      if [[ $count -eq 0 ]]
+      then
+   	echo "" > $rc/gmail.unread
+      else
+         echo "${plainB_redF}${redB_whiteF} gmail: $count${reset_color}" > $rc/gmail.unread
+      fi
+   fi
    sleep 15
 }
 
@@ -141,6 +141,10 @@ function list-timedservice-info() {
    cat <<EOTS
 EOTS
 }
+
+# If switch is off, then exit the script
+grep -sq "switch: off" $config_file
+[[ $? -eq 0 ]] && sleep 15 && exit 0
 
 $operation $@
 exit 0
