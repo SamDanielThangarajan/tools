@@ -46,7 +46,7 @@ function tmuxunreadmailcount() {
    then
       echo "" > $rc/unread
    else
-      echo "${plainB_redF}${redB_whiteF} Mails: $count${reset_color}" > $rc/unread
+      echo "${plainB_redF}${redB_whiteF} Outlook: $count${reset_color}" > $rc/unread
    fi
    sleep 15
 }

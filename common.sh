@@ -47,7 +47,6 @@ function install_brew() {
     -e \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   act_on_exit_status $? "brew install failed"
-
 }
 
 function brewinstall() {

@@ -40,7 +40,7 @@ def collect_commits(start,end):
             print line1
         elif is_diverged.match(line):
                 return 1
-            
+
     return 0
 
 def main(argv):
@@ -54,8 +54,8 @@ def main(argv):
             skip = skip + count
 
     clean_tmp_file()
-	
+
 if __name__ == '__main__':
   main(sys.argv[1:])
 
-	
+
