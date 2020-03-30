@@ -38,6 +38,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
+Plugin 'zxqfl/tabnine-vim'
 
 
 " TODO plugins to consider
@@ -364,7 +365,7 @@ autocmd FileType nerdtree setlocal relativenumber
 "Spell check
 :nnoremap <F3> : set spell spelllang=en_us<CR>
 :nnoremap <F4> :set nospell<CR>
-nnoremap <leader>f :set nofoldenable<cr>
+nnoremap <leader>f :set nofoldenable!<cr>
 command Hexmode :%!xxd
 command Hexmoderevert :%!xxd -r
 command Reload :so $MYVIMRC
