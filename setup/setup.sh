@@ -71,6 +71,7 @@ function backup_files {
    backup_list[1]=${HOME}/.gitconfig
    backup_list[2]=${HOME}/.tmux.conf
    backup_list[3]=${HOME}/tools_alias
+   backup_list[4]=${HOME}/.config/flake8
 
    local i=0
    for file in ${backup_list[@]};
@@ -194,6 +195,12 @@ function deploy_tmux_config
 
 }
 
+function deploy_flake8_config
+{
+  mkdir -p ${HOME}/.config/
+  ln -s ${g_tools_path}/config/shell/flake8 ${HOME}/.config/
+}
+
 function touch_needed_config_files {
 if [[ ! -f ${g_nodes_config} ]];
 then
@@ -229,6 +236,9 @@ deploy_git_config
 debug ""
 
 deploy_tmux_config
+debug ""
+
+deploy_flake8_config
 debug ""
 
 touch_needed_config_files

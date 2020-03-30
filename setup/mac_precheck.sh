@@ -22,7 +22,7 @@ done
 
 for i in wget tmux git cmake cscope ctags gnu-getopt htop watch python3
 do
-  [[ $(is_installed $i) -ne 0 ]] && brewinstall wget
+  [[ $(is_installed $i) -ne 0 ]] && brewinstall $i
 done
 
 
