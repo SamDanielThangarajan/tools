@@ -9,7 +9,7 @@ g_autocomplete_file=${HOME}/tools_autocomplete
 
 function custom_ac_writer
 {
-   echo "$1" >> ${g_autocomplete_file}
+   echo -e "$1" >> ${g_autocomplete_file}
 }
 
 ################################
@@ -20,10 +20,10 @@ echo "Writing tools auto complete ${g_time}"
 
 rm -rf ${g_autocomplete_file}
 
-custom_ac_writer "##########################################"
-custom_ac_writer "## Auto complete (${g_time})"
-custom_ac_writer "###"
-custom_ac_writer ""
+custom_ac_writer "##########################################
+## Auto complete (${g_time})
+###
+"
 
 for file in $(ls ${g_repo_base})
 do
@@ -32,7 +32,6 @@ do
 done
 custom_ac_writer ""
 
-custom_ac_writer "# Auto complete for setclones"
-custom_ac_writer "source ${TOOLS}/auto-complete-scripts/dockerssh-autocomplete.sh"
-custom_ac_writer ""
-custom_ac_writer ""
+custom_ac_writer "# Auto complete for setclones
+source ${TOOLS}/auto-complete-scripts/dockerssh-autocomplete.sh
+"

@@ -267,3 +267,5 @@ echo "*** ${g_master_setup_file} has to be sourced for every shell"
 
 cat ~/manual_work
 rm -rf ~/manual_work
+
+echo "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html" >> $HOME/reminders
