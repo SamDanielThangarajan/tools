@@ -13,6 +13,10 @@ _setclone()
 
    local cur prev opts
    COMPREPLY=()
+
+   # Only one level of completion is needed.
+   [[ ${#COMP_WORDS[@]} -gt 2 ]] && return 
+
    prev="${COMP_WORDS[COMP_CWORD-1]}"
    cur="${COMP_WORDS[COMP_CWORD]}"
 
