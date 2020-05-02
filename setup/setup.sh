@@ -8,6 +8,7 @@ g_tools_path=$(cd -P "$g_script_path"/.. && pwd -P)
 g_master_setup_file=${HOME}/setup_tools.sh
 g_nodes_config=${HOME}/nodes.cfg
 g_debug=0
+g_remote_config_dir=${HOME}/.remote
 
 # Function to check exit status
 # $1 exit status
@@ -104,6 +105,7 @@ cat<<EOI >${g_master_setup_file}
 #Export variables
 export REPO_BASE=${g_repo_base}
 export TOOLS=${g_tools_path}
+export REMOTE_CONFIG_DIR=${g_remote_config_dir}
 
 # Some vi exports to marry vim with tmux
 # Two giant robots colide :)
@@ -261,6 +263,8 @@ do
    debug "${file}"
 done
 echo ""
+
+mkdir -p $g_remote_config_dir
 
 echo "*** custom alias created in ${HOME}/tools_alias"
 echo "*** ${g_master_setup_file} has to be sourced for every shell"

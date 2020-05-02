@@ -14,6 +14,10 @@ set node [lindex $argv 1];
 set user [lindex $argv 2];
 set pwd [lindex $argv 3];
 
+if {[file exists "$env(REMOTE_CONFIG_DIR)/$pwd"]} {
+  set pwd [exec cat "$env(REMOTE_CONFIG_DIR)/$pwd"]
+}
+
 proc authenticate { PASSWD } {
    expect {
       "*password:" { send -- "$PASSWD\r" }
