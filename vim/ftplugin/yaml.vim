@@ -81,6 +81,6 @@ setlocal expandtab
 setlocal autoindent
 setlocal smarttab
 setlocal fileformat=unix
-colorscheme evening
+"colorscheme evening
 nnoremap <F7> : call YamlLint()<CR>
 

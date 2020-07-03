@@ -40,13 +40,10 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'zxqfl/tabnine-vim'
 
-
-" TODO plugins to consider
-" commad t
-" Look in github page for vundle for more plugins
 call vundle#end()
 
 let $VIM='~/.vim/'
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" vim basic config
@@ -63,11 +60,11 @@ set binary
 set showmode
 set showmatch
 set nowrapscan
-"set shiftwidth=2
 set binary 
 set filetype=on
 set incsearch
 set ic
+
 "let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 let Tlist_Ctags_Cmd = 'ctags'
 let Tlist_Inc_Winwidth = 0
@@ -223,6 +220,7 @@ com! -ra I call VisBlockIncr()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au VimLeave * echo "                  github.com/SamDanielThangarajan !!!"
+
 set cursorline
 
 :let mapleader = '`'
@@ -231,49 +229,41 @@ if isdirectory("~/.vim/bundle/vim-pathogen")
    execute pathogen#infect()
 endif
 
-
 "backup dir
 set backupdir=~/.vim/backup
 
 
 "Set numbering
-:se rnu
 function! NumberToggle()
    if(&relativenumber == 1)
-      set norelativenumber
-      set number
+     set norelativenumber
    else
-      set nonumber
-      set relativenumber
+     set nonumber relativenumber
    endif
 endfunc
 
-function SetNumber()
-   set nornu
-   set nu
-endfunc
-
-function SetRNumber()
-   set nonu
-   set rnu
-endfunc
-
 function MyInsertLeave()
-   :call SetRNumber()
    hi CursorLine term=NONE,underline ctermfg=NONE ctermbg=236 guibg=#353535
+   hi LineNr term=bold cterm=bold ctermfg=215 
+   hi CursorLineNr term=bold cterm=bold ctermfg=198 
+   set number relativenumber
 endfunc
 
 function MyInsertEnter()
-   :call SetNumber()
    hi CursorLine ctermbg=DarkBlue ctermfg=LightGrey term=bold cterm=bold
+   hi LineNr term=bold cterm=bold ctermfg=215 
+   hi CursorLineNr term=bold cterm=bold ctermfg=198 
+   set norelativenumber
 endfunc
 
+:set number relativenumber
+:augroup numbertoggle
+:  autocmd!
+:  autocmd BufEnter,FocusGained,InsertLeave * call MyInsertLeave()
+:  autocmd BufLeave,FocusLost,InsertEnter   * call MyInsertEnter()
+:augroup END
 
 nnoremap <leader>n :call NumberToggle()<cr>
-:au FocusLost * :call SetNumber()
-:au FocusGained * :call SetRNumber()
-autocmd InsertEnter * :call MyInsertEnter()
-autocmd InsertLeave * :call MyInsertLeave()
 
 "Set filetype for yaml
 au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml
@@ -395,3 +385,18 @@ if !empty($PROJECT_NAME)
 endif
 
 let g:ycm_log_level='debug'
+
+hi statusline ctermfg=215 ctermbg=0
+hi statuslineNC ctermfg=12 ctermbg=0
+" Formats the statusline
+" https://stackoverflow.com/questions/9065941/how-can-i-change-vim-status-line-color
+set statusline=\ %y
+set statusline+=\ %f
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
+set statusline+=\ %=                        " align left
+set statusline+=Line:%l/%L[%p%%]            " line X of Y [percent of file]
+set statusline+=\ Col:%c                    " current column
+set statusline+=\ Buf:%n                    " Buffer number
+set statusline+=\ [%b][0x%B]\               " ASCII and byte code under cursor 

@@ -55,7 +55,7 @@ custom_alias_writer "
 while read alias node user passd
 do
    [[ $alias =~ ^# ]] && continue
-   printf \
+   echo -e \
     "alias login-${alias}=\"${TOOLS}/remote_scripts/remote_op.exp login $node $user $passd\"\n" \
     "alias rsync-${alias}=\"${TOOLS}/remote_scripts/remote_op.exp rsync $node $user $passd\"\n" \
     "alias rrsync-${alias}=\"${TOOLS}/remote_scripts/remote_op.exp rrsync $node $user $passd\"\n" \

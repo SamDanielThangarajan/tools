@@ -2,27 +2,32 @@
 
 . $TOOLS/common.sh
 
-# Create an alternate screen
-enter_alt_screen
+declare -r TMPFILE=$(mktemp /tmp/colors.XX)
 
 function exit_pgm() {
-   rm -rf .col.tmp >& /dev/null
+   rm -rf $TMPFILE >& /dev/null
    exit_restore_screen
 }
-trap exit_pgm INT
 
 function show_colors() {
-   rm -rf $1 2>/dev/null
    str="\\x1b[38;5;m"
-   j=0
+   local j=0
    for i in {0..254} ; do
-      printf "\x1b[38;5;${i}mcolor${i} " >> $1
+      printf "\x1b[38;5;${i}mcolor${i} " >> $TMPFILE
       j=$(($j + 1 ))
-      [[ $j -eq 5 ]] && j=0 && printf "\n" >> $1
+      [[ $j -eq 5 ]] && j=0 && printf "\n" >> $TMPFILE
    done
 }
 
-show_colors .col.tmp
-cat .col.tmp | column -t
+#################################
+## Main
+###
+trap exit_pgm INT
+
+# Create an alternate screen
+enter_alt_screen
+
+show_colors $TMPFILE
+cat $TMPFILE | column -t
 
 read_escape_cmd && exit_pgm
