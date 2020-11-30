@@ -47,5 +47,6 @@ then
   exit 0
 fi
 
+echo "Mac precheck completed..."
 
 exit 0

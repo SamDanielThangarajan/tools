@@ -221,8 +221,8 @@ fi
 process_options "$@"
 
 [[ $(uname -s) = "Darwin" ]] \
-  && . ${g_script_path}/mac_precheck.sh \
-  || . ${g_script_path}/lnx_precheck.sh
+  && ${g_script_path}/mac_precheck.sh \
+  || ${g_script_path}/lnx_precheck.sh
 
 backup_files 
 debug ""
@@ -248,11 +248,11 @@ debug ""
 
 # Write custom alias
 export REPO_BASE=${g_repo_base}
-${g_script_path}/write_tools_alias.sh
+${g_tools_path}/config/shell/write_tools_alias.sh
 
 # Write auto complete
 export TOOLS=${g_tools_path}
-${g_script_path}/write_tools_autocomplete.sh
+${g_tools_path}/config/shell/write_tools_autocomplete.sh
 
 # Run mactoos setup
 ${g_tools_path}/mactools/setup.sh
