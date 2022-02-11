@@ -9,6 +9,7 @@ CURRENT_DIR=$(pwd)
 TMPFILE=$(mktemp /tmp/vim.setup.XXXXXX)
 TMP_REMINDER_FILE=$(mktemp /tmp/vim.setup.XXXXXX)
 
+VIM="mvim -v"
 VIM_DIR="${HOME}/.vim"
 VIM_RC="${HOME}/.vimrc"
 VIM_BUNDLE_DIR="${VIM_DIR}/bundle/"
@@ -89,14 +90,14 @@ endif
 EOI
 
 log_detail "Installing Vim plugins.."
-vim +PluginInstall +qall
+$VIM +PluginInstall +qall
 cp ${SCRIPT_PATH}/cscope_maps.vim ${VIM_DIR}/plugin
 
 log_detail "Importing all helptags"
 for plugin in ${VIM_BUNDLE_DIR}/*/; do
-   vim -u NONE -c "helptags ${plugin}/doc" -c q
+   $VIM -u NONE -c "helptags ${plugin}/doc" -c q
 done
-vim -u NONE -c "helptags ${VIM_DIR}/doc" -c q
+$VIM -u NONE -c "helptags ${VIM_DIR}/doc" -c q
 
 log_detail "Installing filetype plugins...."
 for file in $(ls $SCRIPT_PATH/ftplugin/*.vim)
@@ -110,7 +111,7 @@ ln -s ${SCRIPT_PATH}/nerdtree_plugin/mappings.vim ${VIM_DIR}/nerdtree_plugin/map
 
 log_detail "Installing Go binaries."
 # PErhaps this doesn't work now?
-vim +GoInstallBinaries +qall
+$VIM +GoInstallBinaries +qall
 
 log_detail "Writing reminders."
 cat <<EOF > ${TMP_REMINDER_FILE}

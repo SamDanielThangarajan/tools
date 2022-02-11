@@ -20,4 +20,13 @@ function! SamPytest()
   	\'title': l:args }) | copen
 endfunction
 
+function! SamPyLint()
+  let l:cmd = "pylint --argument-naming-style=any " . expand('%')
+  :call setqflist([], ' ', {
+        \'lines' : systemlist(l:cmd),
+    \'title': 'pylint' }) | copen
+endfunction
+
 nnoremap <F9> :call SamPytest()<CR>
+nnoremap <F6> :call SamPyLint()<CR>
+

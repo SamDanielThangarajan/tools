@@ -24,5 +24,5 @@ nnoremap <F8> : call ExecuteFile()<CR>
 
 "nasty way of getting my needed colors, use the exact same order
 "colorscheme evening
-colorscheme slate
-"colorscheme evening
+"colorscheme slate
+colorscheme 256-grayvim
