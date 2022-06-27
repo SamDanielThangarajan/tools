@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import commands
 import os
@@ -22,20 +22,20 @@ if new_files_op[0] == 0:
 #Display
 count = 0
 
-print ''
+print ('')
 for file in list_of_files:
-    print '[' + str(count) + '] ' + file
+    print ('[' + str(count) + '] ' + file)
     count = count + 1
 
 
 while True:
-    print ''
+    print ('')
     selection = input('Select the file: ')
 
-    print ''
-    print 'Opening ' + list_of_files[selection]
+    print ('')
+    print ('Opening ' + list_of_files[selection])
 
-    print ''
+    print ('')
     confirm = raw_input("Continue y/n : ")
 
     if confirm.lower() == 'y' or confirm.lower() == 'yes':

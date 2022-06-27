@@ -21,11 +21,11 @@ if {[file exists "$env(REMOTE_CONFIG_DIR)/$pwd"]} {
 proc authenticate { PASSWD } {
    expect {
       "*password:" { send -- "$PASSWD\r" }
-      "*(yes/no)?*" {
+      "Are you sure you*" {
          send -- "yes\r"
-            expect {
-               "*password:" { send -- "$PASSWD\r" }
-            }
+             expect {
+                "*password:" { send -- "$PASSWD\r" }
+             }
       }
    }
 }

@@ -92,6 +92,7 @@ EOI
 log_detail "Installing Vim plugins.."
 $VIM +PluginInstall +qall
 cp ${SCRIPT_PATH}/cscope_maps.vim ${VIM_DIR}/plugin
+cp ${SCRIPT_PATH}/filetype.vim ${VIM_DIR}/
 
 log_detail "Importing all helptags"
 for plugin in ${VIM_BUNDLE_DIR}/*/; do

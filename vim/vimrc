@@ -385,6 +385,10 @@ if !empty($PROJECT_NAME)
    endif
 endif
 
+command GShow :Git show
+command GTree :Git tree
+command GBlame :Git blame
+
 let g:ycm_log_level='debug'
 
 hi statusline ctermfg=215 ctermbg=0
