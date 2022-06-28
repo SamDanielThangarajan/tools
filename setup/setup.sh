@@ -10,17 +10,10 @@ g_nodes_config=${HOME}/nodes.cfg
 g_debug=0
 g_remote_config_dir=${HOME}/.remote
 
-# Function to check exit status
-# $1 exit status
-# $2 message to be printed
-function act_on_exit_status {
-    local exit_status=$1
-    local msg=$2
-    if [ ${exit_status} -ne 0 ];then
-        echo "${msg} failed, Error code ${exit_status}, Exiting..."
-        exit $exit_status
-    fi
-}
+
+# Source common utils
+source ${g_tools_path}/common.sh
+
 
 #Arg exit status
 function print_usage_and_exit {
@@ -77,7 +70,7 @@ function backup_files {
    local i=0
    for file in ${backup_list[@]};
    do
-      debug "$file ... backingup"
+      debug "Backup $file"
       if [[ -d ${file} ]]; then
          cp -r ${file} ${file}_${g_time}
          g_backedup_list[${i}]=${file}_${g_time}
@@ -89,7 +82,7 @@ function backup_files {
       fi
       i=$(expr $i + 1)
    done
-   debug "Backing up files and folders ...done"
+   debug "Back up files and folders ...done"
 
 }
 
@@ -186,6 +179,7 @@ function deploy_tmux_config
    echo "Install powerline-status and powerline-fonts"
    #https://medium.com/@elviocavalcante/5-steps-to-improve-your-terminal-appearance-on-mac-osx-f58b20058c84
    #https://github.com/powerline/fonts
+   rm -rf ${HOME}/.tmux.conf
    ln -s ${g_tools_path}/config/tmux/tmux.conf ${HOME}/.tmux.conf
    debug "tmux config setup ...done"
 
@@ -204,14 +198,14 @@ function deploy_flake8_config
 }
 
 function touch_needed_config_files {
-if [[ ! -f ${g_nodes_config} ]];
-then
-cat <<ENC >${g_nodes_config}
+   if [[ ! -f ${g_nodes_config} ]];
+   then
+      cat <<ENC >${g_nodes_config}
 #config format
 #alias_name node username password
 ENC
 echo "Fillin node details in ${g_nodes_config}.."
-fi
+   fi
 }
 
 ###########################################

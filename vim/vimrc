@@ -39,6 +39,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'zxqfl/tabnine-vim'
+Plugin 'rust-lang/rust.vim'
 
 call vundle#end()
 
@@ -383,6 +384,10 @@ if !empty($PROJECT_NAME)
       exe 'source' project_specific_config
    endif
 endif
+
+command GShow :Git show
+command GTree :Git tree
+command GBlame :Git blame
 
 let g:ycm_log_level='debug'
 
